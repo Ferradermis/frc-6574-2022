@@ -8,12 +8,13 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-/*import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.commands.autonomouscommands.AutonomousMovingPractice;
+import frc.robot.commands.drivetraincommands.ArcadeDrive;
+/*import frc.robot.commands.autonomouscommands.AutonomousMovingPractice;
 import frc.robot.commands.autonomouscommands.MoveOffLine;
 import frc.robot.commands.drivetraincommands.ArcadeDrive;
 import frc.robot.commands.shootercommands.ShootCommand;
@@ -37,13 +38,13 @@ public class RobotContainer {
    */
   
   //Subsystems
-  //public static final OI oi = new OI(); //Phase out
+  public static final OI oi = new OI(); //Phase out
   public static final DriveTrain driveTrain = new DriveTrain();
   //public static final Shooter shooter = new Shooter();
   //public static final Intake intake = new Intake();
   //public static final Climber climber = new Climber();
   
-  public static final Compressor compressor = new Compressor();
+  public static final Compressor compressor = new Compressor(PneumaticsModuleType.CTREPCM);
 
   //public static final Blinkin m_blinkin = new Blinkin(0);
     
@@ -59,7 +60,7 @@ public class RobotContainer {
   //  turret.setDefaultCommand(turnTurret);
 
     SmartDashboard.putNumber("Delay Start of Auto: ", 0.0);
-    autochooser.addOption("Move off Initiation line", new MoveOffLine(-1));
+    //autochooser.addOption("Move off Initiation line", new MoveOffLine(-1));
 
     SmartDashboard.putData("Autonomous Chooser", autochooser);
     allianceChooser.setDefaultOption("Red Alliance (pipeline)", "red");    
@@ -70,9 +71,9 @@ public class RobotContainer {
   }
 
  
-  public void setShooterSpeed(int speed) {
+  /*public void setShooterSpeed(int speed) {
     Shooter.shooterSpeed = speed;
-  }
+  }*/
 
   private void configureButtonBindings() {
 
