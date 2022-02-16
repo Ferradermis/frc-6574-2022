@@ -16,27 +16,27 @@ public final class Constants {
 
     public static final int EXAMPLE_ID = 0;
 
-    //DriveTrain
-    public static final int frontLeft = 0;
-    public static final int middleLeft = 0;
-    public static final int backLeft = 0;
-    public static final int frontRight = 0;
-    public static final int middleRight = 0;
-    public static final int backRight = 0;
+    /** DriveTrain */
+    public static final int FRONT_LEFT = 0;
+    public static final int MIDDLE_LEFT = 0;
+    public static final int BACK_LEFT = 0;
+    public static final int FRONT_RGIHT = 0;
+    public static final int MIDDLE_RIGHT = 0;
+    public static final int BACK_RIGHT = 0;
 
-    //Feeder
-    public static final int innerFeeder = 0;
-    public static final int outerFeeder =0;
+    /** Feeder */
+    public static final int INNER_FEEDER = 0;
+    public static final int oOUTER_FEEDER =0;
 
-    //Climber
-    public static final int rightClimber = 0;
-    public static final int leftClimer = 0;
+    /** Climber */
+    public static final int RIGHT_CLIMBER = 0;
+    public static final int leLEFT_CLIMBER = 0;
     
-    //Intake
-    public static final int intakeOne = 0;
-    public static final int intakeTwo = 0;
+    /** Intake */
+    public static final int INTAKE_ONE = 0;
+    public static final int INTAKE_TWO = 0;
 
-    //Transition
-    
+    /** Transition */
+
 
 }
