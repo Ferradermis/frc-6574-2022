@@ -9,30 +9,31 @@ import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /** Add your docs here. */
-public class Blinkin extends SubsystemBase{
-    private static Spark m_blinkin = null;
+public class Blinkin extends SubsystemBase {
 
-    public Blinkin(int pwmPort) {
-        m_blinkin = new Spark(pwmPort);
-      }
-      public static void set(double val) {
-        if ((val >= -1.0) && (val <= 1.0)) {
-          m_blinkin.set(val);
-        }
-      }
+	private static Spark blinkin = null;
 
-    public static void allianceColor() {
-    boolean isRed = NetworkTableInstance.getDefault().getTable("FMSInfo").getEntry("IsRedAlliance").getBoolean(true);
-    if (isRed == true){
-      Blinkin.set(-0.01);
-      System.out.println("led RED");
-    } else {
-      Blinkin.set(0.19);
-      System.out.println("led BLUE");
-    }
-  }
+	public Blinkin(int pwmPort) {
+		blinkin = new Spark(pwmPort);
+	}
+	public static void set(double val) {
+		if ((val >= -1.0) && (val <= 1.0)) {
+			blinkin.set(val);
+		}
+	}
 
-  public static void oceanPalette(){
-      set(-0.95);
-  }
+	public static void allianceColor() {
+		boolean isRed = NetworkTableInstance.getDefault().getTable("FMSInfo").getEntry("IsRedAlliance").getBoolean(true);
+		if (isRed == true){
+			set(-0.01);
+			System.out.println("led RED");
+		} else {
+			set(0.19);
+			System.out.println("led BLUE");
+		}
+	}
+
+	public static void oceanPalette(){
+		set(-0.95);
+	}
 }

@@ -10,15 +10,18 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Shooter extends SubsystemBase {
-  WPI_TalonFX innerFeeder = new WPI_TalonFX(Constants.INNER_FEEDER);
-  WPI_TalonFX outerFeeder = new WPI_TalonFX(Constants.OUTER_FEEDER);
-  /** Creates a new Shooter. */  
-  public Shooter() {
-    
-  }
 
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
+	WPI_TalonFX innerFeeder = new WPI_TalonFX(Constants.INNER_FEEDER);
+	WPI_TalonFX outerFeeder = new WPI_TalonFX(Constants.OUTER_FEEDER);
+
+	/** Creates a new Shooter. */
+	public Shooter() {
+
+	}
+
+	@Override
+	public void periodic() {
+		// This method will be called once per scheduler run
+	}
+
 }

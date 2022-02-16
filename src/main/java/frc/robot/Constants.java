@@ -26,16 +26,21 @@ public final class Constants {
 
     /** Feeder */
     public static final int INNER_FEEDER = 0;
-    public static final int OUTER_FEEDER =0;
+    public static final int OUTER_FEEDER = 0;
 
     /** Climber */
     public static final int RIGHT_CLIMBER = 0;
     public static final int LEFT_CLIMBER = 0;
-    
+
     /** Intake */
     public static final int INTAKE_ONE_CAN_ID = 0;
     public static final int INTAKE_TWO_CAN_ID = 0;
 
     public static final int INTAKE_OUT_PCH_ID = 0;
     public static final int INTAKE_IN_PCH_ID = 0;
-} 
+
+    public static final int INTAKE_RIGHT_OMNI_CAN_ID = 0;
+
+    public static final int INTAKE_LEFT_OMNI_CAN_ID = 0;
+
+}

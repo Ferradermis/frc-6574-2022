@@ -13,15 +13,18 @@ import frc.robot.Constants;
 //Single hook
 //Double hook, firstHook, secondHook
 public class Climber extends SubsystemBase {
-  WPI_TalonFX rightClimber = new WPI_TalonFX(Constants.RIGHT_CLIMBER);
-  WPI_TalonFX leftClimber = new WPI_TalonFX(Constants.LEFT_CLIMBER);
-  /** Creates a new Climber. */
-  public Climber() {
 
-  }
+	WPI_TalonFX rightClimber = new WPI_TalonFX(Constants.RIGHT_CLIMBER);
+	WPI_TalonFX leftClimber = new WPI_TalonFX(Constants.LEFT_CLIMBER);
 
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
+	/** Creates a new Climber. */
+	public Climber() {
+
+	}
+
+	@Override
+	public void periodic() {
+		// This method will be called once per scheduler run
+	}
+
 }

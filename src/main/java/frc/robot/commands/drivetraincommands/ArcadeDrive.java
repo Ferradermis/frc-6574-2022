@@ -12,46 +12,48 @@ import frc.robot.RobotContainer;
 
 public class ArcadeDrive extends CommandBase {
 
-  final double THROTTLE = 1; // controls speed via joystick; useful for test driving
-                              // set to 1 for normal drive speed
+	final double THROTTLE = 1; // controls speed via joystick; useful for test driving
+	// set to 1 for normal drive speed
 
-  public ArcadeDrive() {
-    addRequirements(RobotContainer.driveTrain);
-  }
+	public ArcadeDrive() {
+		addRequirements(RobotContainer.driveTrain);
+	}
 
-  // Called just before this Command runs the first time
-  @Override
-  public void initialize() {
-  }
+	// Called just before this Command runs the first time
+	@Override
+	public void initialize() {
 
-  // Called repeatedly when this Command is scheduled to run
-  // NOTE  ALL Limelight code and buttonpressed tests should move to own commands
+	}
 
-  @Override
-  public void execute() {
-    double steer_cmd=0;
-    double drive_cmd=0;
+	// Called repeatedly when this Command is scheduled to run
+	// NOTE  ALL Limelight code and buttonpressed tests should move to own commands
 
-    // Read data from joystick and drive per joystick positioning
-    double y = RobotContainer.oi.getDriverLeftY();
-    double x = -RobotContainer.oi.getDriverRightX(); 
-  
-    drive_cmd = Math.pow(y, 3) * 1;
-    steer_cmd = Math.pow(x, 3) * .75;
-  
-    // throttle is constant that controls "speed" of robot; helpful in testing in small areas
-    RobotContainer.driveTrain.arcadeDrive(drive_cmd, steer_cmd);   
-  }
+	@Override
+	public void execute() {
+		double steer_cmd = 0;
+		double drive_cmd = 0;
 
-  // Make this return true when this Command no longer needs to run execute()
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
+		// Read data from joystick and drive per joystick positioning
+		double y = RobotContainer.oi.getDriverLeftY();
+		double x = -RobotContainer.oi.getDriverRightX();
 
-  // Called once after isFinished returns true
-  @Override
-  public void end(boolean interrupted) {
-  }
+		drive_cmd = Math.pow(y, 3) * 1;
+		steer_cmd = Math.pow(x, 3) * .75;
+
+		// throttle is constant that controls "speed" of robot; helpful in testing in small areas
+		RobotContainer.driveTrain.arcadeDrive(drive_cmd, steer_cmd);
+	}
+
+	// Make this return true when this Command no longer needs to run execute()
+	@Override
+	public boolean isFinished() {
+		return false;
+	}
+
+	// Called once after isFinished returns true
+	@Override
+	public void end(boolean interrupted) {
+
+	}
 
 }

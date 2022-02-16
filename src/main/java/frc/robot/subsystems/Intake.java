@@ -17,47 +17,49 @@ import frc.robot.Constants;
 
 public class Intake extends SubsystemBase {
 
-  WPI_TalonFX intake1 = new WPI_TalonFX(Constants.INTAKE_ONE_CAN_ID);
-  WPI_TalonFX intake2 = new WPI_TalonFX(Constants.INTAKE_TWO_CAN_ID);
-  DoubleSolenoid deployer = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.INTAKE_OUT_PCH_ID, Constants.INTAKE_IN_PCH_ID);
-  CANSparkMax leftOmni = new CANSparkMax(Constants.INTAKE_LEFT_OMNI_CAN_ID, MotorType.kBrushless);
-  CANSparkMax rightOmni = new CANSparkMax(Constants.INTAKE_RIGHT_OMNI_CAN_ID, MotorType.kBrushless);
-  /** Creates a new Intake. */
-  public Intake() {
-    intake1.configFactoryDefault();
-    intake2.configFactoryDefault();
-    intake2.follow(intake1);
-  }
+	WPI_TalonFX intake1 = new WPI_TalonFX(Constants.INTAKE_ONE_CAN_ID);
+	WPI_TalonFX intake2 = new WPI_TalonFX(Constants.INTAKE_TWO_CAN_ID);
+	DoubleSolenoid deployer = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.INTAKE_OUT_PCH_ID, Constants.INTAKE_IN_PCH_ID);
+	CANSparkMax leftOmni = new CANSparkMax(Constants.INTAKE_LEFT_OMNI_CAN_ID, MotorType.kBrushless);
+	CANSparkMax rightOmni = new CANSparkMax(Constants.INTAKE_RIGHT_OMNI_CAN_ID, MotorType.kBrushless);
 
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
+	/** Creates a new Intake. */
+	public Intake() {
+		intake1.configFactoryDefault();
+		intake2.configFactoryDefault();
+		intake2.follow(intake1);
+	}
 
-  public void deploy() {
-    deployer.set(Value.kForward);
-  }
+	@Override
+	public void periodic() {
+		// This method will be called once per scheduler run
+	}
 
-  public void retract(){
-    deployer.set(Value.kReverse);
-  }
+	public void deploy() {
+		deployer.set(Value.kForward);
+	}
 
-  public void stop(){
-    intake1.set(ControlMode.PercentOutput, 0);
-  }
+	public void retract() {
+		deployer.set(Value.kReverse);
+	}
 
-  public void spin(double speed) {
-    if (deployer.get() == Value.kForward) {
-      intake1.set(ControlMode.PercentOutput, speed);
-    }
-  }
-  public void toggleDeploy(){
-    if (deployer.get() == Value.kForward) {
-      retract();
-    }
-    if (deployer.get() == Value.kReverse){
-      deploy();
-    }
-  }
+	public void stop() {
+		intake1.set(ControlMode.PercentOutput, 0);
+	}
+
+	public void spin(double speed) {
+		if (deployer.get() == Value.kForward) {
+			intake1.set(ControlMode.PercentOutput, speed);
+		}
+	}
+
+	public void toggleDeploy() {
+		if (deployer.get() == Value.kForward) {
+			retract();
+		}
+		if (deployer.get() == Value.kReverse) {
+			deploy();
+		}
+	}
 
 }
