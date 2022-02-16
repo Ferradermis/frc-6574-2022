@@ -4,12 +4,17 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 
 //Single hook
 //Double hook, firstHook, secondHook
 public class Climber extends SubsystemBase {
+  WPI_TalonFX rightClimber = new WPI_TalonFX(Constants.RIGHT_CLIMBER);
+  WPI_TalonFX leftClimber = new WPI_TalonFX(Constants.LEFT_CLIMBER);
   /** Creates a new Climber. */
   public Climber() {
 

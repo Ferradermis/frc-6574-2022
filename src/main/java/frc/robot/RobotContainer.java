@@ -24,6 +24,7 @@ import frc.robot.subsystems.Blinkin;
 import frc.robot.subsystems.Climber;*/
 import frc.robot.subsystems.DriveTrain;
 //import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Intake;
 
 
 /**
@@ -41,7 +42,7 @@ public class RobotContainer {
   public static final OI oi = new OI(); //Phase out
   public static final DriveTrain driveTrain = new DriveTrain();
   //public static final Shooter shooter = new Shooter();
-  //public static final Intake intake = new Intake();
+  public static final Intake intake = new Intake();
   //public static final Climber climber = new Climber();
   
   public static final Compressor compressor = new Compressor(PneumaticsModuleType.CTREPCM);
@@ -77,6 +78,9 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
 
+    oi.operator_leftTrigger.whenPressed(()->intake.spin(1))
+                            .whenReleased(()->intake.stop());
+    oi.driver_rightBumper.whenPressed(()->intake.toggleDeploy());
     //-----Driver Controls-----\\
     //oi.driver_rightBumper.whenPressed(()->intake.deployOrRetract());
 
