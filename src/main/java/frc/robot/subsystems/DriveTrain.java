@@ -67,12 +67,6 @@ public class DriveTrain extends SubsystemBase {
 		double leftSpeed = drive + steer;
 		double rightSpeed = drive - steer;
 
-		if (leftSpeed > 1) { leftSpeed = 1; }
-		else if (leftSpeed < -1) {leftSpeed = -1;}
-
-		if (rightSpeed  > 1) {rightSpeed = 1;}
-		else if (rightSpeed < -1) {rightSpeed = -1;}
-
 		frontLeft.set(ControlMode.PercentOutput, -leftSpeed);
 		frontRight.set(ControlMode.PercentOutput, -rightSpeed);
 	}
@@ -118,6 +112,13 @@ public class DriveTrain extends SubsystemBase {
 	public void setPosition(int distance){
 		frontLeft.set(ControlMode.Position, distance);
 		frontRight.set(ControlMode.Position, distance);
+	}
+
+	public void hold() {
+		double frontLeftPosition = frontLeft.getSelectedSensorPosition();
+		double frontRightPosition = frontRight.getSelectedSensorPosition();
+		frontLeft.set(ControlMode.Position, frontLeftPosition);
+		frontRight.set(ControlMode.Position, frontRightPosition);
 	}
 
 	private void configureMotors() {

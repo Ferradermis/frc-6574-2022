@@ -36,4 +36,8 @@ public class Blinkin extends SubsystemBase {
 	public static void oceanPalette(){
 		set(-0.95);
 	}
+
+	public static void lime(){
+		set(0.73);
+	}
 }
