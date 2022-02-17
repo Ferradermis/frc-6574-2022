@@ -16,8 +16,8 @@ import frc.robot.Constants;
 
 public class Intake extends SubsystemBase {
 
-	WPI_TalonFX intakeLeft = new WPI_TalonFX(Constants.INTAKE_ONE_CAN_ID);
-	WPI_TalonFX intakeRight = new WPI_TalonFX(Constants.INTAKE_TWO_CAN_ID);
+	WPI_TalonFX intakeLeft = new WPI_TalonFX(Constants.INTAKE_LEFT_CAN_ID);
+	WPI_TalonFX intakeRight = new WPI_TalonFX(Constants.INTAKE_RIGHT_CAN_ID);
 	DoubleSolenoid deployer = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.INTAKE_OUT_PCH_ID, Constants.INTAKE_IN_PCH_ID);
 	CANSparkMax omniLeft = new CANSparkMax(Constants.INTAKE_LEFT_OMNI_CAN_ID, MotorType.kBrushless);
 	CANSparkMax omniRight = new CANSparkMax(Constants.INTAKE_RIGHT_OMNI_CAN_ID, MotorType.kBrushless);

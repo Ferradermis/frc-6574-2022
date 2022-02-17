@@ -14,18 +14,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.commands.drivetraincommands.ArcadeDrive;
-/*import frc.robot.commands.autonomouscommands.AutonomousMovingPractice;
-import frc.robot.commands.autonomouscommands.MoveOffLine;
-import frc.robot.commands.drivetraincommands.ArcadeDrive;
-import frc.robot.commands.shootercommands.ShootCommand;
-import frc.robot.commands.shootercommands.ShootCommandNoLime;
-import frc.robot.commands.shootercommands.StopShooting;
-import frc.robot.subsystems.Blinkin;
-import frc.robot.subsystems.Climber;*/
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveTrain;
-//import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Intake;
-
+import frc.robot.subsystems.Shooter;
 
 /**
 * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -41,9 +33,9 @@ public class RobotContainer {
 	//Subsystems
 	public static final OI oi = new OI(); //Phase out
 	public static final DriveTrain driveTrain = new DriveTrain();
-	//public static final Shooter shooter = new Shooter();
 	public static final Intake intake = new Intake();
-	//public static final Climber climber = new Climber();
+	public static final Shooter shooter = new Shooter();
+	public static final Climber climber = new Climber();
 
 	public static final Compressor compressor = new Compressor(PneumaticsModuleType.CTREPCM);
 
@@ -73,8 +65,7 @@ public class RobotContainer {
 
 	private void configureButtonBindings() {
 
-		oi.operator_leftTrigger.whenPressed(()->intake.spin(1))
-		.whenReleased(()->intake.stop());
+		oi.operator_leftTrigger.whenPressed(()->intake.spin(1)).whenReleased(()->intake.stop());
 		oi.driver_rightBumper.whenPressed(()->intake.toggleDeploy());
 		//-----Driver Controls-----\\
 		//oi.driver_rightBumper.whenPressed(()->intake.deployOrRetract());

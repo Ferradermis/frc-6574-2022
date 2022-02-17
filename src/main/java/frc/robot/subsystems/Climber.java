@@ -43,5 +43,4 @@ public class Climber extends SubsystemBase {
 		climberRight.set(0);
 	}
 
-
 }

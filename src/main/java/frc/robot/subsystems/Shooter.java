@@ -31,27 +31,27 @@ public class Shooter extends SubsystemBase {
 		// This method will be called once per scheduler run
 	}
 
-	public void spinInnner(double speed){
+	public void spinInnner(double speed) {
 		feederInner.set(speed);
 	}
 
-	public void spinOuter(double speed){
+	public void spinOuter(double speed) {
 		feederOuter.set(speed);
 	}
 
-	public void stopInner(){
+	public void stopInner() {
 		feederInner.set(0);
 	}
 
-	public void stopOuter(){
+	public void stopOuter() {
 		feederOuter.set(0);
 	}
 
-	public void spinShooter(double velocity){
+	public void spinShooter(double velocity) {
 		shooterRight.set(ControlMode.Velocity, velocity);
 	}
 
-	public void stopShooter(){
+	public void stopShooter() {
 		shooterRight.set(0);
 	}
 
