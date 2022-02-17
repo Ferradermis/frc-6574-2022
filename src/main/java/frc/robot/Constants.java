@@ -14,33 +14,42 @@ package frc.robot;
  */
 public final class Constants {
 
-    public static final int EXAMPLE_ID = 0;
+    /*
+        CAN IDs
+    */
 
     /** DriveTrain */
-    public static final int FRONT_LEFT = 0;
-    public static final int MIDDLE_LEFT = 0;
-    public static final int BACK_LEFT = 0;
-    public static final int FRONT_RGIHT = 0;
-    public static final int MIDDLE_RIGHT = 0;
-    public static final int BACK_RIGHT = 0;
-
-    /** Feeder */
-    public static final int INNER_FEEDER = 0;
-    public static final int OUTER_FEEDER = 0;
+    public static final int FRONT_LEFT_CAN_ID = 0;
+    public static final int MIDDLE_LEFT_CAN_ID = 0;
+    public static final int BACK_LEFT_CAN_ID = 0;
+    public static final int FRONT_RIGHT_CAN_ID = 0;
+    public static final int MIDDLE_RIGHT_CAN_ID = 0;
+    public static final int BACK_RIGHT_CAN_ID = 0;
 
     /** Climber */
-    public static final int RIGHT_CLIMBER = 0;
-    public static final int LEFT_CLIMBER = 0;
+    public static final int CLIMBER_RIGHT_CAN_ID = 0;
+    public static final int CLIMBER_LEFT_CAN_ID = 0;
 
     /** Intake */
     public static final int INTAKE_ONE_CAN_ID = 0;
     public static final int INTAKE_TWO_CAN_ID = 0;
 
+    public static final int INTAKE_RIGHT_OMNI_CAN_ID = 0;
+    public static final int INTAKE_LEFT_OMNI_CAN_ID = 0;
+
+    /** Shooter */
+    public static final int SHOOTER_LEFT_CAN_ID = 0;
+    public static final int SHOOTER_RIGHT_CAN_ID = 0;
+
+    public static final int FEEDER_INNER_CAN_ID = 0;
+    public static final int FEEDER_OUTER_CAN_ID = 0;
+
+    /*
+        PCH IDs
+    */
+
+    /** Intake */
     public static final int INTAKE_OUT_PCH_ID = 0;
     public static final int INTAKE_IN_PCH_ID = 0;
-
-    public static final int INTAKE_RIGHT_OMNI_CAN_ID = 0;
-
-    public static final int INTAKE_LEFT_OMNI_CAN_ID = 0;
 
 }

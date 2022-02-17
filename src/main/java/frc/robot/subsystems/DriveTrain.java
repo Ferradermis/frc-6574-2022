@@ -16,7 +16,7 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.RobotMap;
+import frc.robot.Constants;
 
 
 
@@ -26,10 +26,12 @@ public class DriveTrain extends SubsystemBase {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 	public static AHRS gyro = new AHRS(I2C.Port.kMXP);
-	private WPI_TalonFX frontLeft = new WPI_TalonFX(RobotMap.FRONT_LEFT_CAN_ID);
-	private WPI_TalonFX backLeft = new WPI_TalonFX(RobotMap.BACK_LEFT_CAN_ID);
-	private WPI_TalonFX frontRight = new WPI_TalonFX(RobotMap.FRONT_RIGHT_CAN_ID);
-	private WPI_TalonFX backRight = new WPI_TalonFX(RobotMap.BACK_RIGHT_CAN_ID);
+	private WPI_TalonFX frontLeft = new WPI_TalonFX(Constants.FRONT_LEFT_CAN_ID);
+	private WPI_TalonFX middleLeft = new WPI_TalonFX(Constants.MIDDLE_LEFT_CAN_ID);
+	private WPI_TalonFX backLeft = new WPI_TalonFX(Constants.BACK_LEFT_CAN_ID);
+	private WPI_TalonFX frontRight = new WPI_TalonFX(Constants.FRONT_RIGHT_CAN_ID);
+	private WPI_TalonFX middleRight = new WPI_TalonFX(Constants.MIDDLE_RIGHT_CAN_ID);
+	private WPI_TalonFX backRight = new WPI_TalonFX(Constants.BACK_RIGHT_CAN_ID);
 
 	// following variable are used in turnToHeading and driveAlongAngle
 	final double MaxDriveSpeed = 0.3;//was .15
@@ -129,30 +131,41 @@ public class DriveTrain extends SubsystemBase {
 		gyro.enableLogging(false);
 
 		//Enables motors to follow commands sent to front and left
-		backLeft.follow(frontLeft);
+		middleRight.follow(frontRight);
+		middleLeft.follow(frontLeft);
 		backRight.follow(frontRight);
+		backLeft.follow(frontLeft);
 
 		frontLeft.configFactoryDefault();
 		frontRight.configFactoryDefault();
+		middleLeft.configFactoryDefault();
+		middleRight.configFactoryDefault();
 		backLeft.configFactoryDefault();
 		backRight.configFactoryDefault();
 
 		frontLeft.configOpenloopRamp(rampRate);
+		middleLeft.configOpenloopRamp(rampRate);
 		backLeft.configOpenloopRamp(rampRate);
 		frontRight.configOpenloopRamp(rampRate);
+		middleRight.configOpenloopRamp(rampRate);
 		backRight.configOpenloopRamp(rampRate);
 
 		frontRight.setInverted(true);
+		middleRight.setInverted(true);
 		backRight.setInverted(true);
 
 		frontLeft.setNeutralMode(NeutralMode.Brake);
+		middleLeft.setNeutralMode(NeutralMode.Brake);
 		backLeft.setNeutralMode(NeutralMode.Brake);
 		frontRight.setNeutralMode(NeutralMode.Brake);
+		middleRight.setNeutralMode(NeutralMode.Brake);
 		backRight.setNeutralMode(NeutralMode.Brake);
 
 		frontLeft.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, currentLimit, currentLimitThreshold, currentLimitThresholdTime));
+		middleLeft.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, currentLimit, currentLimitThreshold, currentLimitThresholdTime));
 		backLeft.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, currentLimit, currentLimitThreshold, currentLimitThresholdTime));
 		frontRight.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, currentLimit, currentLimitThreshold, currentLimitThresholdTime));
+		middleRight.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, currentLimit, currentLimitThreshold, currentLimitThresholdTime));
 		backRight.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, currentLimit, currentLimitThreshold, currentLimitThresholdTime));
 
 		// no current limit set on drivetrain
@@ -160,14 +173,14 @@ public class DriveTrain extends SubsystemBase {
 		//    frontLeft.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, currentLimit, triggerThresholdCurrent, triggerThresholdTime));
 
 		//Use if we start to do drive by POSITION Closed Loop
-		double kF = 0.00070;
-		double kP = 0.0032;
+		//double kF = 0.00070;
+		//double kP = 0.0032;
 		//double kI = 0;
 		//double kD = 0;
-		frontLeft.config_kP(0, kP);
-		frontRight.config_kP(0, kP);
-		frontLeft.config_kF(0, kF);
-		frontRight.config_kF(0, kF);
+		//frontLeft.config_kP(0, kP);
+		//frontRight.config_kP(0, kP);
+		//frontLeft.config_kF(0, kF);
+		//frontRight.config_kF(0, kF);
 
 		//  frontLeft.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
 		//  frontRight.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);

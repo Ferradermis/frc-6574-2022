@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 /** Add your docs here. */
 public class Blinkin extends SubsystemBase {
 
-	private static Spark blinkin = null;
+	private static Spark blinkin;
 
 	public Blinkin(int pwmPort) {
 		blinkin = new Spark(pwmPort);

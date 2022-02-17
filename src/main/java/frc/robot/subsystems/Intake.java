@@ -4,7 +4,6 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -17,17 +16,20 @@ import frc.robot.Constants;
 
 public class Intake extends SubsystemBase {
 
-	WPI_TalonFX intake1 = new WPI_TalonFX(Constants.INTAKE_ONE_CAN_ID);
-	WPI_TalonFX intake2 = new WPI_TalonFX(Constants.INTAKE_TWO_CAN_ID);
+	WPI_TalonFX intakeLeft = new WPI_TalonFX(Constants.INTAKE_ONE_CAN_ID);
+	WPI_TalonFX intakeRight = new WPI_TalonFX(Constants.INTAKE_TWO_CAN_ID);
 	DoubleSolenoid deployer = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.INTAKE_OUT_PCH_ID, Constants.INTAKE_IN_PCH_ID);
-	CANSparkMax leftOmni = new CANSparkMax(Constants.INTAKE_LEFT_OMNI_CAN_ID, MotorType.kBrushless);
-	CANSparkMax rightOmni = new CANSparkMax(Constants.INTAKE_RIGHT_OMNI_CAN_ID, MotorType.kBrushless);
+	CANSparkMax omniLeft = new CANSparkMax(Constants.INTAKE_LEFT_OMNI_CAN_ID, MotorType.kBrushless);
+	CANSparkMax omniRight = new CANSparkMax(Constants.INTAKE_RIGHT_OMNI_CAN_ID, MotorType.kBrushless);
 
 	/** Creates a new Intake. */
 	public Intake() {
-		intake1.configFactoryDefault();
-		intake2.configFactoryDefault();
-		intake2.follow(intake1);
+		intakeLeft.configFactoryDefault();
+		intakeRight.configFactoryDefault();
+		omniLeft.restoreFactoryDefaults();
+		omniRight.restoreFactoryDefaults();
+		intakeLeft.follow(intakeRight);
+		omniRight.follow(omniLeft);
 	}
 
 	@Override
@@ -44,13 +46,21 @@ public class Intake extends SubsystemBase {
 	}
 
 	public void stop() {
-		intake1.set(ControlMode.PercentOutput, 0);
+		intakeRight.set(0);
 	}
 
 	public void spin(double speed) {
 		if (deployer.get() == Value.kForward) {
-			intake1.set(ControlMode.PercentOutput, speed);
+			intakeRight.set(speed);
 		}
+	}
+
+	public void stopOmnis() {
+		omniRight.set(0);
+	}
+
+	public void spinOmnis(double speed) {
+		omniRight.set(speed);
 	}
 
 	public void toggleDeploy() {
