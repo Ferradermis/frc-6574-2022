@@ -30,16 +30,16 @@ public class Climber extends SubsystemBase {
 		// This method will be called once per scheduler run
 	}
 
-	public void spinClimber(double speed){
+	public void spinClimber(double speed) {
 		climberRight.set(speed);
 	}
 
-	public void holdClimber(){
+	public void holdClimber() {
 		double climberPosition = climberRight.getSelectedSensorPosition();
 		climberRight.set(ControlMode.Position, climberPosition);
 	}
 
-	public void stopClimber(){
+	public void stopClimber() {
 		climberRight.set(0);
 	}
 
