@@ -5,10 +5,12 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 
 
 //Single hook
@@ -23,11 +25,16 @@ public class Climber extends SubsystemBase {
 		climberRight.configFactoryDefault();
 		climberLeft.configFactoryDefault();
 		climberLeft.follow(climberRight);
+		climberLeft.setInverted(true);
+		climberRight.setNeutralMode(NeutralMode.Brake);
+		climberLeft.setNeutralMode(NeutralMode.Brake);
 	}
 
 	@Override
 	public void periodic() {
 		// This method will be called once per scheduler run
+		double speed = RobotContainer.oi.getOperatorLeftY();
+		spin(speed * .7);
 	}
 
 	public void spin(double speed) {

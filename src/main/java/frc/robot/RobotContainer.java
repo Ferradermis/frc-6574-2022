@@ -13,9 +13,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.commands.autocommands.Auto;
 import frc.robot.commands.drivetraincommands.ArcadeDrive;
+import frc.robot.subsystems.Climber;
 /*import frc.robot.commands.autonomouscommands.AutonomousMovingPractice;
-import frc.robot.commands.autonomouscommands.MoveOffLine;
 import frc.robot.commands.drivetraincommands.ArcadeDrive;
 import frc.robot.commands.shootercommands.ShootCommand;
 import frc.robot.commands.shootercommands.ShootCommandNoLime;
@@ -42,10 +43,10 @@ public class RobotContainer {
 	public static final OI oi = new OI(); //Phase out
 	public static final DriveTrain driveTrain = new DriveTrain();
 	//public static final Shooter shooter = new Shooter();
-	public static final Intake intake = new Intake();
-	//public static final Climber climber = new Climber();
+	//public static final Intake intake = new Intake();
+	public static final Climber climber = new Climber();
 
-	public static final Compressor compressor = new Compressor(PneumaticsModuleType.CTREPCM);
+	//public static final Compressor compressor = new Compressor(PneumaticsModuleType.CTREPCM);
 
 	//public static final Blinkin m_blinkin = new Blinkin(0);
 
@@ -61,21 +62,19 @@ public class RobotContainer {
 		//  turret.setDefaultCommand(turnTurret);
 
 		SmartDashboard.putNumber("Delay Start of Auto: ", 0.0);
-		//autochooser.addOption("Move off Initiation line", new MoveOffLine(-1));
-
+		autochooser.addOption("Auto", new Auto(-1));
 		SmartDashboard.putData("Autonomous Chooser", autochooser);
-		allianceChooser.setDefaultOption("Red Alliance (pipeline)", "red");
-		allianceChooser.addOption("Blue Alliance (pipeline)", "blue");
-		SmartDashboard.putData("Alliance (pipeline)", allianceChooser);
+		//allianceChooser.setDefaultOption("Red Alliance (pipeline)", "red");
+		//allianceChooser.addOption("Blue Alliance (pipeline)", "blue");
+		//SmartDashboard.putData("Alliance (pipeline)", allianceChooser);
 
 		configureButtonBindings();
 	}
 
 	private void configureButtonBindings() {
 
-		oi.operator_leftTrigger.whenPressed(()->intake.spin(1))
-		.whenReleased(()->intake.stop());
-		oi.driver_rightBumper.whenPressed(()->intake.toggleDeploy());
+		//oi.operator_leftTrigger.whenPressed(()->intake.spin(1)).whenReleased(()->intake.stop());
+		//oi.driver_rightBumper.whenPressed(()->intake.toggleDeploy());
 		//-----Driver Controls-----\\
 		//oi.driver_rightBumper.whenPressed(()->intake.deployOrRetract());
 

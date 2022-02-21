@@ -19,9 +19,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 
-
-
-
 public class DriveTrain extends SubsystemBase {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
@@ -36,12 +33,12 @@ public class DriveTrain extends SubsystemBase {
 	// following variable are used in turnToHeading and driveAlongAngle
 	final double MaxDriveSpeed = 0.3;//was .15
 	final double MaxTurnSpeed = 0.25;
-	public final int EncoderUnitsPerFeet = 14500;
+	public final int EncoderUnitsPerFeet = 14500;//New robot probably need to change.
 
 	public DriveTrain() {
 		configureMotors();
 		resetPosition();
-		gyro.calibrate();
+		gyro.calibrate();//
 	}
 
 	@Override
@@ -78,6 +75,51 @@ public class DriveTrain extends SubsystemBase {
 		frontLeft.set(ControlMode.PercentOutput, 0);
 		frontRight.set(ControlMode.PercentOutput, 0);
 	}
+
+	//functions to support 
+	public void driveAlongAngle(double distance, double alongAngle) {
+		int direction = (distance > 0) ? 1 : -1;
+		driveAlongAngle(Math.abs(distance), direction, alongAngle);
+	  }
+	
+	  public void driveAlongAngle(double distanceInFeet, int direction, double alongAngle)
+	  {
+		double kF = 0.1;  //kF is essentially minimal amount to drive
+		double kP = 0.75;
+		double tolerance = 100; // this would not be roughly 1 inch
+	
+		double angleKP = .005; //this is not .006
+		
+		double driveSpeed;
+		double turnSpeed = 0.0;
+		double distanceError = distanceInFeet * EncoderUnitsPerFeet * direction;    
+		double endPosition = getPosition() + distanceError;
+	
+		double angleError = alongAngle - getGyroAngle();
+		
+	   // this code can be uncommented if we want to make sure we turn to Heading first
+	   // if (Math.abs(angleError) > 1) {
+	   //   turnToHeading(alongAngle);
+	   // }
+		SmartDashboard.putNumber("Current distanceError", distanceError);
+	
+		  while (Math.abs(distanceError) > tolerance){
+	
+			driveSpeed = distanceError / EncoderUnitsPerFeet / 5 * kP + Math.copySign(kF,distanceError);
+			// make sure we go no faster than MaxDriveSpeed
+			driveSpeed = ((Math.abs(driveSpeed) > MaxDriveSpeed) ? Math.copySign(MaxDriveSpeed, driveSpeed) :  driveSpeed);
+			angleError = alongAngle + getGyroAngle();
+			turnSpeed = angleError * angleKP;
+			// make sure turnSpeed is not greater than MaxTurnSpeed
+			turnSpeed = ((Math.abs(turnSpeed) > MaxTurnSpeed ? Math.copySign(MaxTurnSpeed, angleError): turnSpeed));
+			arcadeDrive(driveSpeed, turnSpeed);
+			distanceError = endPosition + getPosition();
+			SmartDashboard.putNumber("Current distanceError", distanceError);
+		  }
+		
+		stop();
+	  }
+	
 
 	/**
 	* Gets the angle of drive train from its initial position.
@@ -123,7 +165,7 @@ public class DriveTrain extends SubsystemBase {
 
 	private void configureMotors() {
 
-		double rampRate = 0.1875; //time in seconds to go from 0 to full throttle; Lower this number and tune current limits
+		double rampRate = 0.3; //time in seconds to go from 0 to full throttle; Lower this number and tune current limits
 		int currentLimit = 30;
 		//currentLimitThreshold represents the current that the motor needs to sustain for the currentLimitThresholdTime to then be limited to the currentLimit
 		int currentLimitThreshold = 35;
@@ -131,18 +173,18 @@ public class DriveTrain extends SubsystemBase {
 
 		gyro.enableLogging(false);
 
-		//Enables motors to follow commands sent to front and left
-		middleRight.follow(frontRight);
-		middleLeft.follow(frontLeft);
-		backRight.follow(frontRight);
-		backLeft.follow(frontLeft);
-
 		frontLeft.configFactoryDefault();
 		frontRight.configFactoryDefault();
 		middleLeft.configFactoryDefault();
 		middleRight.configFactoryDefault();
 		backLeft.configFactoryDefault();
 		backRight.configFactoryDefault();
+
+		//Enables motors to follow commands sent to front and left
+		middleRight.follow(frontRight);
+		middleLeft.follow(frontLeft);
+		backRight.follow(frontRight);
+		backLeft.follow(frontLeft);
 
 		frontLeft.configOpenloopRamp(rampRate);
 		middleLeft.configOpenloopRamp(rampRate);
