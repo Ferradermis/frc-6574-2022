@@ -13,6 +13,9 @@ import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -32,8 +35,12 @@ public class DriveTrain extends SubsystemBase {
 	final double MaxDriveSpeed = 0.3;//was .15
 	final double MaxTurnSpeed = 0.25;
 	public final int EncoderUnitsPerFeet = 14500;//New robot probably need to change.
+	public final double encoderDistancePerPulse = 0;
+
+	private final DifferentialDriveOdometry m_odometry;
 
 	public DriveTrain() {
+		m_odometry = new DifferentialDriveOdometry(gyro.getRotation2d());
 		configureMotors();
 		resetPosition();
 		gyro.calibrate();//
@@ -65,6 +72,23 @@ public class DriveTrain extends SubsystemBase {
 		frontLeft.set(ControlMode.PercentOutput, -leftSpeed);
 		frontRight.set(ControlMode.PercentOutput, -rightSpeed);
 	}
+	public DifferentialDriveWheelSpeeds getWheelSpeeds(){
+		return new DifferentialDriveWheelSpeeds(frontLeft.getSelectedSensorVelocity() * encoderDistancePerPulse, frontRight.getSelectedSensorVelocity() * encoderDistancePerPulse);
+	  }
+	
+	  public Pose2d getPose(){
+		return m_odometry.getPoseMeters();
+	  }
+	  public void resetOdometry(Pose2d pose) {
+		frontLeft.setSelectedSensorPosition(0);
+		frontRight.setSelectedSensorPosition(0);
+		m_odometry.resetPosition(pose,gyro.getRotation2d());
+	  }
+	
+	  public void tankDriveVolts(double leftVolts, double rightVolts) {
+		frontLeft.setVoltage(leftVolts);
+		frontRight.setVoltage(rightVolts);
+	  }
 
 	/**
 	* Stops all drivetrain wheels.
