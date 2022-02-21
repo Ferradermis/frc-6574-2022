@@ -18,10 +18,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-
 public class DriveTrain extends SubsystemBase {
-	// Put methods for controlling this subsystem
-	// here. Call these from Commands.
+
 	public static AHRS gyro = new AHRS(I2C.Port.kMXP);
 	private WPI_TalonFX frontLeft = new WPI_TalonFX(Constants.FRONT_LEFT_CAN_ID);
 	private WPI_TalonFX middleLeft = new WPI_TalonFX(Constants.MIDDLE_LEFT_CAN_ID);
@@ -151,7 +149,7 @@ public class DriveTrain extends SubsystemBase {
 		frontRight.setSelectedSensorPosition(0, 0, 50);
 	}
 
-	public void setPosition(int distance){
+	public void setPosition(int distance) {
 		frontLeft.set(ControlMode.Position, distance);
 		frontRight.set(ControlMode.Position, distance);
 	}

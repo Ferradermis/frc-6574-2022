@@ -4,8 +4,6 @@
 
 package frc.robot;
 
-import com.kauailabs.navx.frc.AHRS;
-
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -35,8 +33,8 @@ public final class Constants {
     public static final int CLIMBER_LEFT_CAN_ID = 7;
 
     /** Intake */
-    public static final int INTAKE_ONE_CAN_ID = 0;
-    public static final int INTAKE_TWO_CAN_ID = 0;
+    public static final int INTAKE_LEFT_CAN_ID = 0;
+    public static final int INTAKE_RIGHT_CAN_ID = 0;
 
     public static final int INTAKE_RIGHT_OMNI_CAN_ID = 0;
     public static final int INTAKE_LEFT_OMNI_CAN_ID = 0;
