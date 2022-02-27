@@ -25,7 +25,7 @@ public class Auto extends InstantCommand {
     HelperMethods.allAutoStart();
 // (new TurnTurretAtStart(RobotContainer.turret)).schedule();
     RobotContainer.driveTrain.resetPosition();
-    RobotContainer.driveTrain.driveAlongAngle(distance, 0);
+    //RobotContainer.driveTrain.driveAlongAngle(distance, 0);
     
     //driveTrain.arcadeDrive(.25,0);
     //Timer.delay(3);

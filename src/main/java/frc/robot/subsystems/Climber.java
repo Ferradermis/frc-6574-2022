@@ -8,6 +8,8 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
@@ -19,6 +21,10 @@ public class Climber extends SubsystemBase {
 
 	WPI_TalonFX climberRight = new WPI_TalonFX(Constants.CLIMBER_RIGHT_CAN_ID);
 	WPI_TalonFX climberLeft = new WPI_TalonFX(Constants.CLIMBER_LEFT_CAN_ID);
+
+
+	Solenoid initialHook = new Solenoid(PneumaticsModuleType.REVPH, Constants.CLIMBER_INITIAL_HOOK_PCH_ID);
+	Solenoid secondHook = new Solenoid(PneumaticsModuleType.REVPH, Constants.CLIMBER_SECOND_HOOK_PCH_ID);
 
 	/** Creates a new Climber. */
 	public Climber() {
@@ -34,11 +40,17 @@ public class Climber extends SubsystemBase {
 	public void periodic() {
 		// This method will be called once per scheduler run
 		double speed = RobotContainer.oi.getOperatorLeftY();
+		/*
+		if (Math.abs(speed)< .05) {
+		}else {
+			hold();
+		}*/
 		spin(speed * .7);
+		
 	}
 
 	public void spin(double speed) {
-		climberRight.set(speed);
+		climberRight.set(-speed); 
 	}
 
 	public void hold() {

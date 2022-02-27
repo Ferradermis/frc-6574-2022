@@ -13,7 +13,9 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -52,7 +54,9 @@ public class RobotContainer {
 	//public static final Intake intake = new Intake();
 	public static final Climber climber = new Climber();
 
-	//public static final Compressor compressor = new Compressor(PneumaticsModuleType.CTREPCM);
+	public static final Compressor compressor = new Compressor(Constants.PCH_CAN_ID, PneumaticsModuleType.REVPH);
+	public static final PneumaticHub ph = new PneumaticHub(Constants.PCH_CAN_ID);
+	public static final PowerDistribution pdh = new PowerDistribution(Constants.PDH_CAN_ID, PowerDistribution.ModuleType.kRev);
 
 	//public static final Blinkin m_blinkin = new Blinkin(0);
 
@@ -84,7 +88,7 @@ public class RobotContainer {
 		//oi.operator_leftTrigger.whenPressed(()->intake.spin(1)).whenReleased(()->intake.stop());
 		//oi.driver_rightBumper.whenPressed(()->intake.toggleDeploy());
 		//-----Driver Controls-----\\
-		//oi.driver_rightBumper.whenPressed(()->intake.deployOrRetract());
+		//soi.driver_rightBumper.whenPressed(()->intake.deployOrRetract());
 
 
 		//-----Operator Controls-----\\

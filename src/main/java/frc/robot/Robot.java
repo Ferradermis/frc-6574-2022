@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.autocommands.Auto;
+import frc.robot.subsystems.Blinkin;
 
 /**
 * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -43,7 +44,8 @@ public class Robot extends TimedRobot {
 		  } catch (IOException ex) {
 			  DriverStation.reportError("Unable to open trajectory: " + "paths/AutoPath.wpilib.json", ex.getStackTrace());
 		  }
-	  
+		RobotContainer.ph.clearStickyFaults();
+		RobotContainer.pdh.clearStickyFaults();
 	}
 
 	/**
@@ -111,12 +113,16 @@ public class Robot extends TimedRobot {
 	public void testInit() {
 		// Cancels all running commands at the start of test mode.
 		CommandScheduler.getInstance().cancelAll();
+		RobotContainer.ph.clearStickyFaults();
+		RobotContainer.pdh.clearStickyFaults();
+		RobotContainer.compressor.enableDigital();
 	}
 
 	/** This function is called periodically during test mode. */
 	@Override
 	public void testPeriodic() {
-
+		//Blinkin.oceanPalette();
+		RobotContainer.compressor.enableDigital();
 	}
 
 }

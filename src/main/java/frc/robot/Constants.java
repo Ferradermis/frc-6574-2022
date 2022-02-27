@@ -20,6 +20,9 @@ public final class Constants {
         CAN IDs
     */
 
+    public static final int PCH_CAN_ID = 9;
+    public static final int PDH_CAN_ID = 10;
+
     /** DriveTrain */
     public static final int FRONT_LEFT_CAN_ID = 1;
     public static final int MIDDLE_LEFT_CAN_ID = 2;
@@ -52,13 +55,17 @@ public final class Constants {
         PCH IDs
     */
 
+    /** Climber */
+    public static final int CLIMBER_INITIAL_HOOK_PCH_ID = 9;
+    public static final int CLIMBER_SECOND_HOOK_PCH_ID = 10;
+
     /** Intake */
     public static final int INTAKE_OUT_PCH_ID = 0;
     public static final int INTAKE_IN_PCH_ID = 0;
 
 
 
-    /* trajectorie **/
+    /* trajectory **/
     public static final double ksVolts = 0;
     public static final double kvVoltSecondsPerMeter = 0;
     public static final double kaVoltSecondsSquaredPerMeter = 0;

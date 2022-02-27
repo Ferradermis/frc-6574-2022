@@ -98,51 +98,6 @@ public class DriveTrain extends SubsystemBase {
 		frontRight.set(ControlMode.PercentOutput, 0);
 	}
 
-	//functions to support 
-	public void driveAlongAngle(double distance, double alongAngle) {
-		int direction = (distance > 0) ? 1 : -1;
-		driveAlongAngle(Math.abs(distance), direction, alongAngle);
-	  }
-	
-	  public void driveAlongAngle(double distanceInFeet, int direction, double alongAngle)
-	  {
-		double kF = 0.1;  //kF is essentially minimal amount to drive
-		double kP = 0.75;
-		double tolerance = 100; // this would not be roughly 1 inch
-	
-		double angleKP = .005; //this is not .006
-		
-		double driveSpeed;
-		double turnSpeed = 0.0;
-		double distanceError = distanceInFeet * EncoderUnitsPerFeet * direction;    
-		double endPosition = getPosition() + distanceError;
-	
-		double angleError = alongAngle - getGyroAngle();
-		
-	   // this code can be uncommented if we want to make sure we turn to Heading first
-	   // if (Math.abs(angleError) > 1) {
-	   //   turnToHeading(alongAngle);
-	   // }
-		SmartDashboard.putNumber("Current distanceError", distanceError);
-	
-		  while (Math.abs(distanceError) > tolerance){
-	
-			driveSpeed = distanceError / EncoderUnitsPerFeet / 5 * kP + Math.copySign(kF,distanceError);
-			// make sure we go no faster than MaxDriveSpeed
-			driveSpeed = ((Math.abs(driveSpeed) > MaxDriveSpeed) ? Math.copySign(MaxDriveSpeed, driveSpeed) :  driveSpeed);
-			angleError = alongAngle + getGyroAngle();
-			turnSpeed = angleError * angleKP;
-			// make sure turnSpeed is not greater than MaxTurnSpeed
-			turnSpeed = ((Math.abs(turnSpeed) > MaxTurnSpeed ? Math.copySign(MaxTurnSpeed, angleError): turnSpeed));
-			arcadeDrive(driveSpeed, turnSpeed);
-			distanceError = endPosition + getPosition();
-			SmartDashboard.putNumber("Current distanceError", distanceError);
-		  }
-		
-		stop();
-	  }
-	
-
 	/**
 	* Gets the angle of drive train from its initial position.
 	* @return	a double containing the drive train's current heading
