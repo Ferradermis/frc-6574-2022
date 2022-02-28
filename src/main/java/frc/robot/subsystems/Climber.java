@@ -22,9 +22,8 @@ public class Climber extends SubsystemBase {
 	WPI_TalonFX climberRight = new WPI_TalonFX(Constants.CLIMBER_RIGHT_CAN_ID);
 	WPI_TalonFX climberLeft = new WPI_TalonFX(Constants.CLIMBER_LEFT_CAN_ID);
 
-
-	Solenoid initialHook = new Solenoid(PneumaticsModuleType.REVPH, Constants.CLIMBER_INITIAL_HOOK_PCH_ID);
-	Solenoid secondHook = new Solenoid(PneumaticsModuleType.REVPH, Constants.CLIMBER_SECOND_HOOK_PCH_ID);
+	public Solenoid initialHook = new Solenoid(Constants.PCH_CAN_ID, PneumaticsModuleType.REVPH, Constants.CLIMBER_INITIAL_HOOK_PCH_ID);
+	public Solenoid secondHook = new Solenoid(Constants.PCH_CAN_ID, PneumaticsModuleType.REVPH, Constants.CLIMBER_SECOND_HOOK_PCH_ID);
 
 	/** Creates a new Climber. */
 	public Climber() {
@@ -45,7 +44,7 @@ public class Climber extends SubsystemBase {
 		}else {
 			hold();
 		}*/
-		spin(speed * .7);
+		spin(speed * .9);
 		
 	}
 

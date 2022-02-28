@@ -94,6 +94,10 @@ public class RobotContainer {
 		//-----Operator Controls-----\\
 		//oi.operator_aButton.toggleWhenPressed(climb, true);  // schedules ClimbUpAndDown for endgame
 		//oi.operator_rightTrigger.whenPressed(new ShootCommand()).whenReleased(new StopShooting());
+		oi.operator_leftBumper.whenPressed(()->climber.secondHook.set(true));
+		oi.operator_leftTrigger.whenPressed(()->climber.secondHook.set(false));
+		oi.operator_rightBumper.whenPressed(()->climber.initialHook.set(true));
+		oi.operator_rightTrigger.whenPressed(()->climber.initialHook.set(false));
 	}
 
 	/**
