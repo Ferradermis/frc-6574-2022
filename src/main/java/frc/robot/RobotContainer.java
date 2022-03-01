@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import frc.robot.commands.autocommands.Auto;
 import frc.robot.commands.drivetraincommands.ArcadeDrive;
 import frc.robot.commands.drivetraincommands.DriveAlongAngle;
+import frc.robot.commands.intakecommands.IntakeProcess;
 import frc.robot.subsystems.Climber;
 /*import frc.robot.commands.autonomouscommands.AutonomousMovingPractice;
 import frc.robot.commands.drivetraincommands.ArcadeDrive;
@@ -50,8 +51,8 @@ public class RobotContainer {
 	//Subsystems
 	public static final OI oi = new OI(); //Phase out
 	public static final DriveTrain driveTrain = new DriveTrain();
-	//public static final Shooter shooter = new Shooter();
-	//public static final Intake intake = new Intake();
+	public static final Shooter shooter = new Shooter();
+	public static final Intake intake = new Intake();
 	public static final Climber climber = new Climber();
 
 	public static final Compressor compressor = new Compressor(Constants.PCH_CAN_ID, PneumaticsModuleType.REVPH);
@@ -98,6 +99,21 @@ public class RobotContainer {
 		oi.operator_leftTrigger.whenPressed(()->climber.secondHook.set(false));
 		oi.operator_rightBumper.whenPressed(()->climber.initialHook.set(true));
 		oi.operator_rightTrigger.whenPressed(()->climber.initialHook.set(false));
+
+
+		//oi.driver_rightBumper.toggleWhenPressed(new IntakeProcess());
+
+
+		oi.operator_aButton.whenPressed(()->intake.spinOmnis(0.5)).whenReleased(()->intake.stopOmnis());
+		oi.operator_xButton.whenPressed(()->shooter.spinOuter(0.5)).whenReleased(()->shooter.stopOuter());
+		oi.operator_yButton.whenPressed(()->shooter.spinInner(0.5)).whenReleased(()->shooter.stopInner());
+		
+		oi.operator_bButton.whenPressed(()->intake.spin(0.2)).whenReleased(()->intake.stop());
+
+
+		oi.operator_yButton.whenPressed(()->shooter.spinShooterPercentOutput(1)).whenReleased(()->shooter.stop());
+
+		//oi.operator_aButton.whenPressed(()->intake.spin(0.3)).whenReleased(()->intake.stop());
 	}
 
 	/**

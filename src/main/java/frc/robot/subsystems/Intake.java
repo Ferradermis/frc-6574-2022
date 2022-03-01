@@ -4,23 +4,27 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 
 public class Intake extends SubsystemBase {
 
 	WPI_TalonFX intakeLeft = new WPI_TalonFX(Constants.INTAKE_LEFT_CAN_ID);
 	WPI_TalonFX intakeRight = new WPI_TalonFX(Constants.INTAKE_RIGHT_CAN_ID);
-	DoubleSolenoid deployer = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.INTAKE_OUT_PCH_ID, Constants.INTAKE_IN_PCH_ID);
 	CANSparkMax omniLeft = new CANSparkMax(Constants.INTAKE_LEFT_OMNI_CAN_ID, MotorType.kBrushless);
 	CANSparkMax omniRight = new CANSparkMax(Constants.INTAKE_RIGHT_OMNI_CAN_ID, MotorType.kBrushless);
+	public Solenoid deployer = new Solenoid(Constants.PCH_CAN_ID, PneumaticsModuleType.REVPH, Constants.INTAKE_PCH_ID);
 
 	/** Creates a new Intake. */
 	public Intake() {
@@ -28,21 +32,38 @@ public class Intake extends SubsystemBase {
 		intakeRight.configFactoryDefault();
 		omniLeft.restoreFactoryDefaults();
 		omniRight.restoreFactoryDefaults();
+
 		intakeLeft.follow(intakeRight);
-		omniRight.follow(omniLeft);
+		intakeLeft.setInverted(true);
+
+		intakeLeft.setNeutralMode(NeutralMode.Coast);
+		intakeRight.setNeutralMode(NeutralMode.Coast);
+
+		omniLeft.setIdleMode(IdleMode.kCoast);
+		omniRight.setIdleMode(IdleMode.kCoast);
 	}
 
 	@Override
 	public void periodic() {
 		// This method will be called once per scheduler run
+		//double speed = RobotContainer.oi.getOperatorLeftY();
+		/*
+		if (Math.abs(speed)< .05) {
+		}else {
+			hold();
+		}*/
+		//spin(speed);
+		//spinOmnis(speed);
+		//RobotContainer.shooter.spinInner(speed);
+		//RobotContainer.shooter.spinOuter(speed);
 	}
 
 	public void deploy() {
-		deployer.set(Value.kForward);
+		deployer.set(true);
 	}
 
 	public void retract() {
-		deployer.set(Value.kReverse);
+		deployer.set(false);
 	}
 
 	public void stop() {
@@ -50,24 +71,24 @@ public class Intake extends SubsystemBase {
 	}
 
 	public void spin(double speed) {
-		if (deployer.get() == Value.kForward) {
-			intakeRight.set(speed);
-		}
+		intakeRight.set(-speed);
 	}
 
 	public void stopOmnis() {
 		omniRight.set(0);
+		omniLeft.set(0);
 	}
 
 	public void spinOmnis(double speed) {
-		omniRight.set(speed);
+		omniLeft.set(speed);
+		omniRight.set(-speed);
 	}
 
 	public void toggleDeploy() {
-		if (deployer.get() == Value.kForward) {
+		if (deployer.get() == true) {
 			retract();
 		}
-		if (deployer.get() == Value.kReverse) {
+		if (deployer.get() == false) {
 			deploy();
 		}
 	}

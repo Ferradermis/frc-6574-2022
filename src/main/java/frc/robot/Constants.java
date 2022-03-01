@@ -16,6 +16,14 @@ import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
  */
 public final class Constants {
 
+
+    public static final double INTAKE_SPIN_SPEED = 0.5;
+    public static final double OMNIS_SPIN_SPEED = 0.25;
+    public static final double FEEDER_INNER_SPEED = 0.5;
+    public static final double FEEDER_OUTER_SPEED = 0.5;
+    public static final double SHOOTER_RESTING_VELOCITY = 10;
+    public static final double SHOOTER_VELOCITY_ONE = 20;
+    public static final double SHOOTER_VELOCITY_TWO = 30;
     /*
         CAN IDs
     */
@@ -38,18 +46,18 @@ public final class Constants {
     public static final int CLIMBER_LEFT_CAN_ID = 7;
 
     /** Intake */
-    public static final int INTAKE_LEFT_CAN_ID = 0;
-    public static final int INTAKE_RIGHT_CAN_ID = 0;
+    public static final int INTAKE_LEFT_CAN_ID = 17;
+    public static final int INTAKE_RIGHT_CAN_ID = 16;
 
-    public static final int INTAKE_RIGHT_OMNI_CAN_ID = 0;
-    public static final int INTAKE_LEFT_OMNI_CAN_ID = 0;
+    public static final int INTAKE_RIGHT_OMNI_CAN_ID = 12;
+    public static final int INTAKE_LEFT_OMNI_CAN_ID = 11;
 
     /** Shooter */
-    public static final int SHOOTER_LEFT_CAN_ID = 0;
-    public static final int SHOOTER_RIGHT_CAN_ID = 0;
+    public static final int SHOOTER_LEFT_CAN_ID = 15;
+    public static final int SHOOTER_RIGHT_CAN_ID = 13;
 
-    public static final int FEEDER_INNER_CAN_ID = 0;
-    public static final int FEEDER_OUTER_CAN_ID = 0;
+    public static final int FEEDER_INNER_CAN_ID = 14;
+    public static final int FEEDER_OUTER_CAN_ID = 18;
 
     /*
         PCH IDs
@@ -60,10 +68,7 @@ public final class Constants {
     public static final int CLIMBER_SECOND_HOOK_PCH_ID = 7;
 
     /** Intake */
-    public static final int INTAKE_OUT_PCH_ID = 0;
-    public static final int INTAKE_IN_PCH_ID = 0;
-
-
+    public static final int INTAKE_PCH_ID = 15;
 
     /* trajectory **/
     public static final double ksVolts = 0;

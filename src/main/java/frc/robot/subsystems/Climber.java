@@ -44,7 +44,7 @@ public class Climber extends SubsystemBase {
 		}else {
 			hold();
 		}*/
-		spin(speed * .9);
+		//spin(speed * .9);
 		
 	}
 
