@@ -39,12 +39,15 @@ public class Climber extends SubsystemBase {
 	public void periodic() {
 		// This method will be called once per scheduler run
 		double speed = RobotContainer.oi.getOperatorLeftY();
-		/*
-		if (Math.abs(speed)< .05) {
-		}else {
+		
+		if (Math.abs(speed)< .3) {
 			hold();
-		}*/
-		//spin(speed * .9);
+
+		}
+		else {
+			spin(speed);
+		}
+		
 		
 	}
 

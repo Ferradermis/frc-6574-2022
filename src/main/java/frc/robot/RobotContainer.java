@@ -8,10 +8,6 @@
 package frc.robot;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.RamseteController;
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
-import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
@@ -20,8 +16,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.RamseteCommand;
-import frc.robot.commands.autocommands.Auto;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.commands.autocommands.AutoDrive;
+import frc.robot.commands.autocommands.AutoIntake;
+import frc.robot.commands.autocommands.AutoIntakeStop;
+import frc.robot.commands.autocommands.AutoShoot;
+import frc.robot.commands.autocommands.AutoStopOmnis;
 import frc.robot.commands.drivetraincommands.ArcadeDrive;
 import frc.robot.commands.drivetraincommands.DriveAlongAngle;
 import frc.robot.commands.intakecommands.IntakeProcess;
@@ -72,10 +73,9 @@ public class RobotContainer {
 	public RobotContainer() {
 
 		driveTrain.setDefaultCommand(arcadeDrive);
-		//  turret.setDefaultCommand(turnTurret);
 
 		SmartDashboard.putNumber("Delay Start of Auto: ", 0.0);
-		autochooser.addOption("Auto", new DriveAlongAngle(-1,0));
+		//autochooser.addOption("Auto", new DriveAlongAngle(-1,0));
 		SmartDashboard.putData("Autonomous Chooser", autochooser);
 		//allianceChooser.setDefaultOption("Red Alliance (pipeline)", "red");
 		//allianceChooser.addOption("Blue Alliance (pipeline)", "blue");
@@ -89,30 +89,23 @@ public class RobotContainer {
 		//oi.operator_leftTrigger.whenPressed(()->intake.spin(1)).whenReleased(()->intake.stop());
 		//oi.driver_rightBumper.whenPressed(()->intake.toggleDeploy());
 		//-----Driver Controls-----\\
-		//soi.driver_rightBumper.whenPressed(()->intake.deployOrRetract());
+		oi.driver_rightBumper.toggleWhenPressed(new IntakeProcess());
+		oi.driver_rightTrigger.whenPressed(()->shooter.spinShooterPercentOutput(Constants.SHOOTER_LOW_GOAL_PERCENT_OUTPUT, Constants.FEEDER_SHOOTING_SPEED)).whenReleased(()->shooter.stop());
+		oi.driver_leftTrigger.whenPressed(()->shooter.spinShooterPercentOutput(Constants.SHOOTER_HIGH_GOAL_PERCENT_OUTPUT, Constants.FEEDER_SHOOTING_SPEED)).whenReleased(()->shooter.stop());
 
 
 		//-----Operator Controls-----\\
 		//oi.operator_aButton.toggleWhenPressed(climb, true);  // schedules ClimbUpAndDown for endgame
 		//oi.operator_rightTrigger.whenPressed(new ShootCommand()).whenReleased(new StopShooting());
 		oi.operator_leftBumper.whenPressed(()->climber.secondHook.set(true));
-		oi.operator_leftTrigger.whenPressed(()->climber.secondHook.set(false));
+		//oi.operator_leftTrigger.whenPressed(()->climber.secondHook.set(false));
 		oi.operator_rightBumper.whenPressed(()->climber.initialHook.set(true));
-		oi.operator_rightTrigger.whenPressed(()->climber.initialHook.set(false));
+		//oi.operator_rightTrigger.whenPressed(()->climber.initialHook.set(false));
 
-
-		//oi.driver_rightBumper.toggleWhenPressed(new IntakeProcess());
-
-
-		oi.operator_aButton.whenPressed(()->intake.spinOmnis(0.5)).whenReleased(()->intake.stopOmnis());
-		oi.operator_xButton.whenPressed(()->shooter.spinOuter(0.5)).whenReleased(()->shooter.stopOuter());
-		oi.operator_yButton.whenPressed(()->shooter.spinInner(0.5)).whenReleased(()->shooter.stopInner());
-		
-		oi.operator_bButton.whenPressed(()->intake.spin(0.2)).whenReleased(()->intake.stop());
-
-
-		oi.operator_yButton.whenPressed(()->shooter.spinShooterPercentOutput(1)).whenReleased(()->shooter.stop());
-
+		//oi.operator_aButton.whenPressed(()->intake.spinOmnis(0.5)).whenReleased(()->intake.stopOmnis());
+		//oi.operator_xButton.whenPressed(()->shooter.spinOuter(0.5)).whenReleased(()->shooter.stopOuter());
+		//oi.operator_yButton.whenPressed(()->shooter.spinInner(0.5)).whenReleased(()->shooter.stopInner());
+		//oi.operator_bButton.whenPressed(()->intake.spin(0.2)).whenReleased(()->intake.stop());
 		//oi.operator_aButton.whenPressed(()->intake.spin(0.3)).whenReleased(()->intake.stop());
 	}
 
@@ -123,7 +116,8 @@ public class RobotContainer {
 	*/
 	public Command getAutonomousCommand() {
 		
-		  //return autochooser.getSelected();
+		 // return autochooser.getSelected();
+		  /*
 		  var autoVoltageConstraint =
 			  new DifferentialDriveVoltageConstraint(
 				  new SimpleMotorFeedforward(
@@ -151,7 +145,7 @@ public class RobotContainer {
 				// End 3 meters straight ahead of where we started, facing forward
 				new Pose2d(2, 0, new Rotation2d(Math.PI)),
 				// Pass config
-				config);*/
+				config);
 	
 		RamseteCommand ramseteCommand =
 			new RamseteCommand(
@@ -173,6 +167,39 @@ public class RobotContainer {
 		// Reset odometry to the starting pose of the trajectory.
 		driveTrain.resetOdometry(Robot.autoTrajectory.getInitialPose());
 		return ramseteCommand.andThen(() -> driveTrain.tankDriveVolts(0, 0));
+		*/
+
+		SequentialCommandGroup autoRoutine = new SequentialCommandGroup(
+			//shoots low goal(.35)
+			new AutoIntake(),
+
+			new AutoDrive(0, -Constants.AUTO_DRIVE_DISTANCE).withTimeout(3.0),
+			new AutoDrive(0,0).withTimeout(.1),
+			
+			new AutoIntakeStop(),
+
+			new AutoDrive(0, Constants.AUTO_DRIVE_DISTANCE).withTimeout(3.0),
+
+			new AutoShoot(Constants.SHOOTER_LOW_GOAL_PERCENT_OUTPUT, Constants.FEEDER_SHOOTING_SPEED).withTimeout(2),
+			new WaitCommand(1),
+			new AutoShoot(0,0).withTimeout(.25),
+			new AutoStopOmnis()
+
+			//insert blinkin command here
+		);
+
+		SequentialCommandGroup simpleAutoRoutine = new SequentialCommandGroup(
+			new AutoShoot(Constants.SHOOTER_LOW_GOAL_PERCENT_OUTPUT, Constants.FEEDER_SHOOTING_SPEED).withTimeout(1),
+			new WaitCommand(.5),
+			new AutoShoot(0,0).withTimeout(.25),
+			new AutoDrive(0, Constants.AUTO_DRIVE_DISTANCE).withTimeout(3.0),
+			new WaitCommand(1),
+			new AutoDrive(0,0).withTimeout(.25)
+
+		);
+		
+		return autoRoutine;
+		
 	}
 
 	public String getAlliance() {

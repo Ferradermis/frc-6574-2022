@@ -11,6 +11,7 @@ import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 
 public class Shooter extends SubsystemBase {
 
@@ -62,12 +63,17 @@ public class Shooter extends SubsystemBase {
 		shooterRight.set(ControlMode.Velocity, velocity);
 	}
 
-	public void spinShooterPercentOutput(double percent) {
+	public void spinShooterPercentOutput(double percent, double feederPercent) {
 		shooterRight.set(ControlMode.PercentOutput, percent);
+		feederInner.set(ControlMode.PercentOutput, feederPercent);
+		feederOuter.set(ControlMode.PercentOutput, feederPercent);
+		RobotContainer.intake.spinOmnis(.35);
+
 	}
 
 	public void stop() {
 		shooterRight.set(0);
+		feederInner.set(0);
 	}
 	public void configShooterPID() {
 		//double kF = 0.00070;

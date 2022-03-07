@@ -33,7 +33,7 @@ public class IntakeProcess extends CommandBase {
      RobotContainer.intake.spinOmnis(Constants.OMNIS_SPIN_SPEED);
      RobotContainer.shooter.spinOuter(Constants.FEEDER_OUTER_SPEED);
      //if (no color sensor sensing) {
-     RobotContainer.shooter.spinInner(Constants.FEEDER_INNER_SPEED);
+     //RobotContainer.shooter.spinInner(Constants.FEEDER_INNER_SPEED);
      //} else {
       //RobotContainer.shooter.stopInner();
      //}

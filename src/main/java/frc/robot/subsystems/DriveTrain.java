@@ -142,7 +142,7 @@ public class DriveTrain extends SubsystemBase {
 
 	private void configureMotors() {
 
-		double rampRate = 0.3; //time in seconds to go from 0 to full throttle; Lower this number and tune current limits
+		double rampRate = 0.5; //time in seconds to go from 0 to full throttle; Lower this number and tune current limits
 		int currentLimit = 30;
 		//currentLimitThreshold represents the current that the motor needs to sustain for the currentLimitThresholdTime to then be limited to the currentLimit
 		int currentLimitThreshold = 35;

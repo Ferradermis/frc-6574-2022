@@ -17,13 +17,19 @@ import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 public final class Constants {
 
 
-    public static final double INTAKE_SPIN_SPEED = 0.5;
-    public static final double OMNIS_SPIN_SPEED = 0.25;
-    public static final double FEEDER_INNER_SPEED = 0.5;
+    public static final double INTAKE_SPIN_SPEED = 0.35; //should be a real value 
+    public static final double OMNIS_SPIN_SPEED = 0.3;
+    public static final double FEEDER_INNER_SPEED = 0.7;
     public static final double FEEDER_OUTER_SPEED = 0.5;
+    public static final double FEEDER_SHOOTING_SPEED = 0.75;
     public static final double SHOOTER_RESTING_VELOCITY = 10;
     public static final double SHOOTER_VELOCITY_ONE = 20;
     public static final double SHOOTER_VELOCITY_TWO = 30;
+    public static final double SHOOTER_LOW_GOAL_PERCENT_OUTPUT = 0.35;
+    public static final double SHOOTER_HIGH_GOAL_PERCENT_OUTPUT = 0.55;
+
+    public static final double AUTO_DRIVE_DISTANCE = 0.25;
+
     /*
         CAN IDs
     */

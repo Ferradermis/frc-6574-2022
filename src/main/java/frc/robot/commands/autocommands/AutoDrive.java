@@ -5,17 +5,21 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.drivetraincommands;
+package frc.robot.commands.autocommands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class ArcadeDrive extends CommandBase {
+public class AutoDrive extends CommandBase {
 
-	final double THROTTLE = 1; // controls speed via joystick; useful for test driving
+	final double THROTTLE = 1;
+  double steer_cmd;
+  double drive_cmd; // controls speed via joystick; useful for test driving
 	// set to 1 for normal drive speed
 
-	public ArcadeDrive() {
+	public AutoDrive(double steer, double drive) {
+    steer_cmd = steer;
+    drive_cmd = drive;
 		addRequirements(RobotContainer.driveTrain);
 	}
 
@@ -30,15 +34,8 @@ public class ArcadeDrive extends CommandBase {
 
 	@Override
 	public void execute() {
-		double steer_cmd = 0;
-		double drive_cmd = 0;
 
 		// Read data from joystick and drive per joystick positioning
-		double y = RobotContainer.oi.getDriverLeftY();
-		double x = -RobotContainer.oi.getDriverRightX();
-
-		drive_cmd = Math.pow(y, 3) * 1;
-		steer_cmd = Math.pow(x, 3) * .5;
 
 		// throttle is constant that controls "speed" of robot; helpful in testing in small areas
 		RobotContainer.driveTrain.arcadeDrive(drive_cmd, steer_cmd);
