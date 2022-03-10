@@ -86,8 +86,7 @@ public class RobotContainer {
 
 	private void configureButtonBindings() {
 
-		//oi.operator_leftTrigger.whenPressed(()->intake.spin(1)).whenReleased(()->intake.stop());
-		//oi.driver_rightBumper.whenPressed(()->intake.toggleDeploy());
+
 		//-----Driver Controls-----\\
 		oi.driver_rightBumper.toggleWhenPressed(new IntakeProcess());
 		oi.driver_rightTrigger.whenPressed(()->shooter.spinShooterPercentOutput(Constants.SHOOTER_LOW_GOAL_PERCENT_OUTPUT, Constants.FEEDER_SHOOTING_SPEED)).whenReleased(()->shooter.stop());
@@ -96,18 +95,10 @@ public class RobotContainer {
 
 		//-----Operator Controls-----\\
 		//oi.operator_aButton.toggleWhenPressed(climb, true);  // schedules ClimbUpAndDown for endgame
-		//oi.operator_rightTrigger.whenPressed(new ShootCommand()).whenReleased(new StopShooting());
 		oi.operator_leftBumper.whenPressed(()->climber.secondHook.set(true));
-		//oi.operator_leftTrigger.whenPressed(()->climber.secondHook.set(false));
 		oi.operator_rightBumper.whenPressed(()->climber.initialHook.set(true));
-		//oi.operator_rightTrigger.whenPressed(()->climber.initialHook.set(false));
-
-		//oi.operator_aButton.whenPressed(()->intake.spinOmnis(0.5)).whenReleased(()->intake.stopOmnis());
-		//oi.operator_xButton.whenPressed(()->shooter.spinOuter(0.5)).whenReleased(()->shooter.stopOuter());
-		//oi.operator_yButton.whenPressed(()->shooter.spinInner(0.5)).whenReleased(()->shooter.stopInner());
-		//oi.operator_bButton.whenPressed(()->intake.spin(0.2)).whenReleased(()->intake.stop());
-		//oi.operator_aButton.whenPressed(()->intake.spin(0.3)).whenReleased(()->intake.stop());
 	}
+
 
 	/**
 	* Use this to pass the autonomous command to the main {@link Robot} class.

@@ -24,7 +24,7 @@ public class AutoIntake extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.intake.deploy();
+    RobotContainer.intake.deployIntake();
     RobotContainer.intake.spin(Constants.INTAKE_SPIN_SPEED);
     RobotContainer.intake.spinOmnis(Constants.OMNIS_SPIN_SPEED);
     RobotContainer.shooter.spinOuter(Constants.FEEDER_OUTER_SPEED);

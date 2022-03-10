@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
@@ -47,24 +48,14 @@ public class Intake extends SubsystemBase {
 
 	@Override
 	public void periodic() {
-		// This method will be called once per scheduler run
-		//double speed = RobotContainer.oi.getOperatorLeftY();
-		/*
-		if (Math.abs(speed)< .05) {
-		}else {
-			hold();
-		}*/
-		//spin(speed);
-		//spinOmnis(speed);
-		//RobotContainer.shooter.spinInner(speed);
-		//RobotContainer.shooter.spinOuter(speed);
+
 	}
 
-	public void deploy() {
+	public void deployIntake() {
 		deployer.set(true);
 	}
 
-	public void retract() {
+	public void retractIntake() {
 		deployer.set(false);
 	}
 
@@ -74,6 +65,10 @@ public class Intake extends SubsystemBase {
 
 	public void spin(double speed) {
 		intakeRight.set(-speed);
+	}
+
+	public void spinClosedVelocity(double speed) {
+		intakeRight.set(ControlMode.Velocity, speed);
 	}
 
 	public void stopOmnis() {
@@ -88,11 +83,20 @@ public class Intake extends SubsystemBase {
 
 	public void toggleDeploy() {
 		if (deployer.get() == true) {
-			retract();
+			retractIntake();
 		}
 		if (deployer.get() == false) {
-			deploy();
+			deployIntake();
 		}
+	}
+
+	public void configPID() {
+		double kF = 0;
+		double kP = 0;
+		
+		intakeRight.config_kF(0, kF);
+		intakeRight.config_kP(0, kP);
+
 	}
 
 }

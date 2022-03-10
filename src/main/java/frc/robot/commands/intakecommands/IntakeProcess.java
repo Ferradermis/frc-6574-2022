@@ -7,7 +7,6 @@ package frc.robot.commands.intakecommands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.Robot;
 import frc.robot.RobotContainer;
 
 public class IntakeProcess extends CommandBase {
@@ -19,7 +18,7 @@ public class IntakeProcess extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    RobotContainer.intake.deploy();
+    RobotContainer.intake.deployIntake();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -44,7 +43,7 @@ public class IntakeProcess extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     RobotContainer.intake.stop();
-    RobotContainer.intake.retract();
+    RobotContainer.intake.retractIntake();
     RobotContainer.intake.stopOmnis();
     RobotContainer.shooter.stopInner();
     RobotContainer.shooter.stopOuter();

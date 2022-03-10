@@ -23,7 +23,7 @@ public class AutoIntakeStop extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.intake.retract();
+    RobotContainer.intake.retractIntake();
     RobotContainer.intake.stop();
     RobotContainer.intake.stopOmnis();
     RobotContainer.shooter.stopOuter();

@@ -16,19 +16,20 @@ import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
  */
 public final class Constants {
 
-
+    /**Open Loop Constants */
     public static final double INTAKE_SPIN_SPEED = 0.35; //should be a real value 
     public static final double OMNIS_SPIN_SPEED = 0.3;
     public static final double FEEDER_INNER_SPEED = 0.7;
     public static final double FEEDER_OUTER_SPEED = 0.5;
     public static final double FEEDER_SHOOTING_SPEED = 0.75;
-    public static final double SHOOTER_RESTING_VELOCITY = 10;
-    public static final double SHOOTER_VELOCITY_ONE = 20;
-    public static final double SHOOTER_VELOCITY_TWO = 30;
     public static final double SHOOTER_LOW_GOAL_PERCENT_OUTPUT = 0.35;
     public static final double SHOOTER_HIGH_GOAL_PERCENT_OUTPUT = 0.55;
-
     public static final double AUTO_DRIVE_DISTANCE = 0.25;
+
+    /**Closed Loop Constants */
+    public static final double SHOOTER_RESTING_VELOCITY = 10; //10 is placeholder value
+    public static final double SHOOTER_VELOCITY_ONE = 20; //20 is placeholder value
+    public static final double INTAKE_VELOCITY = 30;
 
     /*
         CAN IDs
@@ -93,5 +94,13 @@ public final class Constants {
     // https://docs.wpilib.org/en/stable/docs/software/advanced-controls/trajectories/ramsete.html
     public static final double kRamseteB = 0;
     public static final double kRamseteZeta = 0;
+
+
+    public double convertTalonFXTicksToRPM(double TalonFXTicks) {
+        double convertedTalonFXTicks = TalonFXTicks;
+    
+        return convertedTalonFXTicks;
+
+    }
 
 }

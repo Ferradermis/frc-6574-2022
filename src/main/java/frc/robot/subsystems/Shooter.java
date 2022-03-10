@@ -59,15 +59,17 @@ public class Shooter extends SubsystemBase {
 		feederOuter.set(0);
 	}
 
-	public void spinShooter(double velocity) {
+	public void spinShooterClosedLoop(double velocity, double feederPercent) {
 		shooterRight.set(ControlMode.Velocity, velocity);
+		feederInner.set(ControlMode.PercentOutput, feederPercent);
+		feederOuter.set(ControlMode.PercentOutput, feederPercent);
 	}
 
 	public void spinShooterPercentOutput(double percent, double feederPercent) {
 		shooterRight.set(ControlMode.PercentOutput, percent);
 		feederInner.set(ControlMode.PercentOutput, feederPercent);
 		feederOuter.set(ControlMode.PercentOutput, feederPercent);
-		RobotContainer.intake.spinOmnis(.35);
+		RobotContainer.intake.spinOmnis(Constants.INTAKE_SPIN_SPEED);
 
 	}
 
@@ -76,13 +78,11 @@ public class Shooter extends SubsystemBase {
 		feederInner.set(0);
 	}
 	public void configShooterPID() {
-		//double kF = 0.00070;
-		//double kP = 0.0032;
-		//double kI = 0;
-		//double kD = 0;
-		//shooterLeft.config_kP(0, kP);
-		//shooterRight.config_kP(0, kP);
-		//shooterLeft.config_kF(0, kF);
-		//shooterRight.config_kF(0, kF);
+		double kF = 0.00070;
+		double kP = 0.0032;
+		double kI = 0;
+		double kD = 0;
+		shooterRight.config_kP(0, kP);
+		shooterRight.config_kF(0, kF);
 	}
 }
