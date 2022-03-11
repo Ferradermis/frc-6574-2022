@@ -108,8 +108,15 @@ public class Robot extends TimedRobot {
 	/** This function is called periodically during operator control. */
 	@Override
 	public void teleopPeriodic() {
-
+		if (OI.driver_startButton.get()) { //disables shooter and compressor for endgame
+			//RobotContainer.compressor.setClosedLoopControl(false);
+			RobotContainer.compressor.disable();
+		  }
+		  else if (OI.driver_backButton.get()) { //enables shooter and compressor for standard teleop
+			//RobotContainer.compressor.setClosedLoopControl(true);
+			RobotContainer.compressor.enableDigital();
 	}
+}
 
 	@Override
 	public void testInit() {

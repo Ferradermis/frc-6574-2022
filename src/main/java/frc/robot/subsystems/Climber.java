@@ -40,11 +40,11 @@ public class Climber extends SubsystemBase {
 		climberRight.setNeutralMode(NeutralMode.Brake);
 		climberLeft.setNeutralMode(NeutralMode.Brake);
 
-		//CTRE documentation says SupplyCurrentLimit is for avoiding the tripping of breakers
+		/**CTRE documentation says SupplyCurrentLimit is for avoiding the tripping of breakers*/
 		climberLeft.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, currentLimit, currentLimitThreshold, currentLimitThresholdTime));
 		climberRight.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, currentLimit, currentLimitThreshold, currentLimitThresholdTime));
 
-		//CTRE documentation says StatorCurrentLimit is for limiting acceleration/torque or heat generation
+		/**CTRE documentation says StatorCurrentLimit is for limiting acceleration/torque or heat generation*/
 		//climberLeft.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, currentLimit, currentLimitThreshold, currentLimitThresholdTime));
 		//climberRight.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, currentLimit, currentLimitThreshold, currentLimitThresholdTime));
 
@@ -60,10 +60,8 @@ public class Climber extends SubsystemBase {
 
 		}
 		else {
-			spin(speed);
+			spin(.65);
 		}
-		
-		
 	}
 
 	public void spin(double speed) {

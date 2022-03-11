@@ -63,6 +63,8 @@ public class Shooter extends SubsystemBase {
 		shooterRight.set(ControlMode.Velocity, velocity);
 		feederInner.set(ControlMode.PercentOutput, feederPercent);
 		feederOuter.set(ControlMode.PercentOutput, feederPercent);
+		RobotContainer.intake.spinOmnis(Constants.INTAKE_SPIN_SPEED);
+
 	}
 
 	public void spinShooterPercentOutput(double percent, double feederPercent) {
