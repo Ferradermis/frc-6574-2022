@@ -77,7 +77,10 @@ public class Shooter extends SubsystemBase {
 
 	public void stop() {
 		shooterRight.set(0);
-		feederInner.set(0);
+		feederInner.set(ControlMode.PercentOutput, 0);
+		feederOuter.set(ControlMode.PercentOutput, 0);
+		RobotContainer.intake.spinOmnis(0);
+
 	}
 	public void configShooterPID() {
 		double kF = 0.00070;
