@@ -103,6 +103,8 @@ public class Robot extends TimedRobot {
 		}
 		RobotContainer.ph.clearStickyFaults();
 		RobotContainer.pdh.clearStickyFaults();
+
+		RobotContainer.driveTrain.resetPosition();
 	}
 
 	/** This function is called periodically during operator control. */

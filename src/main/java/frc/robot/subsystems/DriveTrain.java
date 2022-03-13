@@ -14,12 +14,14 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 
 public class DriveTrain extends SubsystemBase {
 
@@ -35,15 +37,15 @@ public class DriveTrain extends SubsystemBase {
 	final double MaxDriveSpeed = 0.3;//was .15
 	final double MaxTurnSpeed = 0.25;
 	public final int EncoderUnitsPerFeet = 14500;//New robot probably need to change.
-	public final double encoderDistancePerPulse = 0;
+	public final double encoderDistancePerPulse = 0.000021382;
 
 	private final DifferentialDriveOdometry m_odometry;
 
 	public DriveTrain() {
-		m_odometry = new DifferentialDriveOdometry(gyro.getRotation2d());
 		configureMotors();
 		resetPosition();
 		gyro.calibrate();//
+		m_odometry = new DifferentialDriveOdometry(gyro.getRotation2d().unaryMinus());
 	}
 
 	@Override
@@ -51,6 +53,17 @@ public class DriveTrain extends SubsystemBase {
 		// This method will be called once per scheduler run
 		SmartDashboard.putNumber("Actual Gyro Heading: ", gyro.getAngle());
 		SmartDashboard.putNumber("Acual Drive Position: ", getPosition());
+
+		SmartDashboard.putNumber("Left:", frontLeft.getSelectedSensorPosition() * encoderDistancePerPulse);
+		SmartDashboard.putNumber("Right:", frontRight.getSelectedSensorPosition() * encoderDistancePerPulse);
+		
+		SmartDashboard.putNumber("Left speed:", frontLeft.getSelectedSensorVelocity() * encoderDistancePerPulse * 10);
+		SmartDashboard.putNumber("Right speed:", frontRight.getSelectedSensorVelocity() * encoderDistancePerPulse * 10);
+		
+		SmartDashboard.putNumber("Left PID:", RobotContainer.leftPID.getSetpoint());
+		SmartDashboard.putNumber("Right PID:", RobotContainer.rightPID.getSetpoint());
+
+		m_odometry.update(gyro.getRotation2d().unaryMinus(), frontLeft.getSelectedSensorPosition() * encoderDistancePerPulse, frontRight.getSelectedSensorPosition() * encoderDistancePerPulse);
 	}
 
 	/**
@@ -73,16 +86,16 @@ public class DriveTrain extends SubsystemBase {
 		frontRight.set(ControlMode.PercentOutput, -rightSpeed);
 	}
 	public DifferentialDriveWheelSpeeds getWheelSpeeds(){
-		return new DifferentialDriveWheelSpeeds(frontLeft.getSelectedSensorVelocity() * encoderDistancePerPulse, frontRight.getSelectedSensorVelocity() * encoderDistancePerPulse);
+		return new DifferentialDriveWheelSpeeds(frontLeft.getSelectedSensorVelocity() * encoderDistancePerPulse * 10, frontRight.getSelectedSensorVelocity() * encoderDistancePerPulse * 10);
 	  }
 	
-	  public Pose2d getPose(){
+	  public Pose2d getPose() {
 		return m_odometry.getPoseMeters();
 	  }
 	  public void resetOdometry(Pose2d pose) {
 		frontLeft.setSelectedSensorPosition(0);
 		frontRight.setSelectedSensorPosition(0);
-		m_odometry.resetPosition(pose,gyro.getRotation2d());
+		m_odometry.resetPosition(pose, gyro.getRotation2d().unaryMinus());
 	  }
 	
 	  public void tankDriveVolts(double leftVolts, double rightVolts) {
@@ -103,7 +116,7 @@ public class DriveTrain extends SubsystemBase {
 	* @return	a double containing the drive train's current heading
 	*/
 	public double getGyroAngle() {
-		return gyro.getAngle();
+		return -gyro.getAngle();
 	}
 
 	/**
@@ -188,9 +201,6 @@ public class DriveTrain extends SubsystemBase {
 		middleRight.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, currentLimit, currentLimitThreshold, currentLimitThresholdTime));
 		backRight.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, currentLimit, currentLimitThreshold, currentLimitThresholdTime));
 
-		// no current limit set on drivetrain
-		// int currentLimit = 30; //int because .setSmartCurrentLimit takes only ints, not doubles. Which makes sense programmatically.
-		//    frontLeft.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, currentLimit, triggerThresholdCurrent, triggerThresholdTime));
 
 		//Use if we start to do drive by POSITION Closed Loop
 		//double kF = 0.00070;

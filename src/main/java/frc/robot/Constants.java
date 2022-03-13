@@ -78,29 +78,28 @@ public final class Constants {
     public static final int INTAKE_PCH_ID = 15;
 
     /* trajectory **/
-    public static final double ksVolts = 0;
-    public static final double kvVoltSecondsPerMeter = 0;
-    public static final double kaVoltSecondsSquaredPerMeter = 0;
+    public static final double ksVolts = 0.69156;
+    public static final double kvVoltSecondsPerMeter = 2.5347;
+    public static final double kaVoltSecondsSquaredPerMeter = 0.30969;
 
-    public static final double kPDriveVel = 0;//3.561;
+    public static final double kPDriveVel = 3.4345;//kPDriveVel = 3.193;//3.561;
 
-    public static final double kTrackWidthMeters = 0;
+    public static final double kTrackWidthMeters = 0.635;
     public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackWidthMeters);
 
-    public static final double kMaxSpeedMetersPerSecond = 0;
-    public static final double kMaxAccelerationMetersPerSecondSquared = 0;
+    //public static final double kMaxSpeedMetersPerSecond = 1.5;
+    //public static final double kMaxAccelerationMetersPerSecondSquared = 2;
 
     // Explanation:
     // https://docs.wpilib.org/en/stable/docs/software/advanced-controls/trajectories/ramsete.html
-    public static final double kRamseteB = 0;
-    public static final double kRamseteZeta = 0;
+    public static final double kRamseteB = 2;
+    public static final double kRamseteZeta = 0.7;
 
 
     public double convertTalonFXTicksToRPM(double TalonFXTicks) {
         double convertedTalonFXTicks = TalonFXTicks;
     
         return convertedTalonFXTicks;
-
     }
 
 }
