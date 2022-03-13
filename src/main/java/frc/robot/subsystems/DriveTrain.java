@@ -13,8 +13,8 @@ import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.I2C;
@@ -66,6 +66,8 @@ public class DriveTrain extends SubsystemBase {
 		m_odometry.update(gyro.getRotation2d().unaryMinus(), frontLeft.getSelectedSensorPosition() * encoderDistancePerPulse, frontRight.getSelectedSensorPosition() * encoderDistancePerPulse);
 	}
 
+	SlewRateLimiter forwardBackLimit = new SlewRateLimiter(2);
+
 	/**
 	* Drives the robot using the arcade drive style,
 	* @param drive is "speed" to move forward (positive) or backward (negative)
@@ -73,6 +75,8 @@ public class DriveTrain extends SubsystemBase {
 	* best to pass in normalized variables from 1 to -1
 	*/
 	public void arcadeDrive(double drive, double steer) {
+
+		drive = forwardBackLimit.calculate(drive);
 		//if steer and drive are both too low, stop the motors and end
 		if ((Math.abs(drive) <= 0.05) && (Math.abs(steer) <= 0.05)) {
 			stop();
