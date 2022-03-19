@@ -84,8 +84,8 @@ public class RobotContainer {
 
 		//-----Driver Controls-----\\
 		oi.driver_rightBumper.toggleWhenPressed(new IntakeProcess());
-		oi.driver_rightTrigger.whenPressed(()->shooter.spinShooterPercentOutput(Constants.SHOOTER_LOW_GOAL_PERCENT_OUTPUT, Constants.FEEDER_SHOOTING_SPEED)).whenReleased(()->shooter.stop());
-		oi.driver_leftTrigger.whenPressed(()->shooter.spinShooterPercentOutput(Constants.SHOOTER_HIGH_GOAL_PERCENT_OUTPUT, Constants.FEEDER_SHOOTING_SPEED)).whenReleased(()->shooter.stop());
+		//oi.driver_rightTrigger.whenPressed(()->shooter.spinShooterPercentOutput(Constants.SHOOTER_LOW_GOAL_PERCENT_OUTPUT, Constants.FEEDER_SHOOTING_SPEED)).whenReleased(()->shooter.stop());
+		//oi.driver_leftTrigger.whenPressed(()->shooter.spinShooterPercentOutput(Constants.SHOOTER_HIGH_GOAL_PERCENT_OUTPUT, Constants.FEEDER_SHOOTING_SPEED)).whenReleased(()->shooter.stop());
 
 
 		//-----Operator Controls-----\\

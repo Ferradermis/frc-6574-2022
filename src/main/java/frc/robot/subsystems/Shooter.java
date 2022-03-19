@@ -7,8 +7,8 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import com.revrobotics.CANSparkMax.IdleMode;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
@@ -34,13 +34,22 @@ public class Shooter extends SubsystemBase {
 		feederInner.setInverted(false);
 		feederOuter.setInverted(false);
 
+		shooterLeft.setNeutralMode(NeutralMode.Coast);
+		shooterRight.setNeutralMode(NeutralMode.Coast);
+
 		feederInner.setNeutralMode(NeutralMode.Brake);
 		feederOuter.setNeutralMode(NeutralMode.Brake);
+
+		configShooterPID();
 	}
 
 	@Override
 	public void periodic() {
 		// This method will be called once per scheduler run
+
+		SmartDashboard.putNumber("Shooter velocity", shooterRight.getSelectedSensorVelocity());
+		spinShooterClosedLoop(13000, Constants.FEEDER_SHOOTING_SPEED);
+		//spinShooterPercentOutput(0.7, 0);
 	}
 
 	public void spinInner(double speed) {
@@ -83,11 +92,13 @@ public class Shooter extends SubsystemBase {
 
 	}
 	public void configShooterPID() {
-		double kF = 0.00070;
-		double kP = 0.0032;
+		double kP = 0.2;
 		double kI = 0;
 		double kD = 0;
+		double kF = 0.055;
 		shooterRight.config_kP(0, kP);
 		shooterRight.config_kF(0, kF);
+		shooterRight.config_kI(0, kI);
+		shooterRight.config_kD(0, kD);
 	}
 }
