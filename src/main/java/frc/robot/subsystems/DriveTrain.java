@@ -159,7 +159,7 @@ public class DriveTrain extends SubsystemBase {
 
 	private void configureMotors() {
 
-		double rampRate = 0.5; //time in seconds to go from 0 to full throttle; Lower this number and tune current limits
+		double rampRate = 0.1; //time in seconds to go from 0 to full throttle; Lower this number and tune current limits
 		int currentLimit = 30;
 		//currentLimitThreshold represents the current that the motor needs to sustain for the currentLimitThresholdTime to then be limited to the currentLimit
 		int currentLimitThreshold = 35;
@@ -192,11 +192,11 @@ public class DriveTrain extends SubsystemBase {
 		backRight.setInverted(true);
 
 		frontLeft.setNeutralMode(NeutralMode.Brake);
-		middleLeft.setNeutralMode(NeutralMode.Brake);
-		backLeft.setNeutralMode(NeutralMode.Brake);
+		middleLeft.setNeutralMode(NeutralMode.Coast);
+		backLeft.setNeutralMode(NeutralMode.Coast);
 		frontRight.setNeutralMode(NeutralMode.Brake);
-		middleRight.setNeutralMode(NeutralMode.Brake);
-		backRight.setNeutralMode(NeutralMode.Brake);
+		middleRight.setNeutralMode(NeutralMode.Coast);
+		backRight.setNeutralMode(NeutralMode.Coast);
 
 		frontLeft.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, currentLimit, currentLimitThreshold, currentLimitThresholdTime));
 		middleLeft.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, currentLimit, currentLimitThreshold, currentLimitThresholdTime));

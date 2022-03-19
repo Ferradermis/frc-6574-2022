@@ -17,7 +17,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 public final class Constants {
 
     /**Open Loop Constants */
-    public static final double INTAKE_SPIN_SPEED = .6;  
+    public static final double INTAKE_SPIN_SPEED = .8;  
     public static final double OMNIS_SPIN_SPEED = 0.75;
     public static final double FEEDER_INNER_SPEED = 0.7;
     public static final double FEEDER_OUTER_SPEED = 0.5;

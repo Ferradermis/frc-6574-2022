@@ -19,7 +19,7 @@ import frc.robot.RobotContainer;
 //Single hook
 //Double hook, firstHook, secondHook
 public class Climber extends SubsystemBase {
-
+	
 	WPI_TalonFX climberRight = new WPI_TalonFX(Constants.CLIMBER_RIGHT_CAN_ID);
 	WPI_TalonFX climberLeft = new WPI_TalonFX(Constants.CLIMBER_LEFT_CAN_ID);
 
