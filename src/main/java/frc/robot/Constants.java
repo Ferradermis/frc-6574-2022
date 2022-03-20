@@ -17,7 +17,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 public final class Constants {
 
     /**Open Loop Constants */
-    public static final double INTAKE_SPIN_SPEED = .8;  
+    public static final double INTAKE_SPIN_SPEED = .75;  
     public static final double OMNIS_SPIN_SPEED = 0.75;
     public static final double FEEDER_INNER_SPEED = 0.7;
     public static final double FEEDER_OUTER_SPEED = 0.5;
@@ -82,7 +82,7 @@ public final class Constants {
     public static final double kvVoltSecondsPerMeter = 2.5347;
     public static final double kaVoltSecondsSquaredPerMeter = 0.30969;
 
-    public static final double kPDriveVel = 3.4345;//kPDriveVel = 3.193;//3.561;
+    public static final double kPDriveVel = 1.5;//3.4345;//kPDriveVel = 3.193;//3.561;
 
     public static final double kTrackWidthMeters = 0.635;
     public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackWidthMeters);

@@ -48,7 +48,7 @@ public class Shooter extends SubsystemBase {
 		// This method will be called once per scheduler run
 
 		SmartDashboard.putNumber("Shooter velocity", shooterRight.getSelectedSensorVelocity());
-		spinShooterClosedLoop(13000, Constants.FEEDER_SHOOTING_SPEED);
+		//spinShooterClosedLoop(13000, Constants.FEEDER_SHOOTING_SPEED);
 		//spinShooterPercentOutput(0.7, 0);
 	}
 

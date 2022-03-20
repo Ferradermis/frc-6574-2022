@@ -5,18 +5,18 @@
 package frc.robot.commands.autocommands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
 public class AutoShoot extends CommandBase {
-  /** Creates a new AutoShoot. */
 
-  double shooter_speed;
-  double feeder_speed;
+  double shooterVel = 0.0;
+  double feederVel = 0.0;
+  /** Creates a new AutoShoot. */
   public AutoShoot(double shooter, double feeder) {
+    shooterVel = shooter;
+    feederVel = feeder;
     // Use addRequirements() here to declare subsystem dependencies.
-    shooter_speed = shooter;
-    feeder_speed = feeder;
-    addRequirements(RobotContainer.shooter, RobotContainer.intake);
   }
 
   // Called when the command is initially scheduled.
@@ -28,14 +28,12 @@ public class AutoShoot extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.shooter.spinShooterPercentOutput(shooter_speed, feeder_speed);
+    RobotContainer.shooter.spinShooterClosedLoop(shooterVel, feederVel);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override

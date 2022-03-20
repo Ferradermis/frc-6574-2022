@@ -8,8 +8,6 @@
 package frc.robot;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.RamseteController;
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
@@ -18,7 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import frc.robot.commands.autocommands.LeftTwoBall;
 import frc.robot.commands.drivetraincommands.ArcadeDrive;
 import frc.robot.commands.intakecommands.IntakeProcess;
 import frc.robot.subsystems.Climber;
@@ -84,10 +82,10 @@ public class RobotContainer {
 
 		//-----Driver Controls-----\\
 		oi.driver_rightBumper.toggleWhenPressed(new IntakeProcess());
-		//oi.driver_rightTrigger.whenPressed(()->shooter.spinShooterPercentOutput(Constants.SHOOTER_LOW_GOAL_PERCENT_OUTPUT, Constants.FEEDER_SHOOTING_SPEED)).whenReleased(()->shooter.stop());
+		oi.driver_rightTrigger.whenPressed(()->shooter.spinShooterClosedLoop(11500, Constants.FEEDER_SHOOTING_SPEED)).whenReleased(()->shooter.stop());
 		//oi.driver_leftTrigger.whenPressed(()->shooter.spinShooterPercentOutput(Constants.SHOOTER_HIGH_GOAL_PERCENT_OUTPUT, Constants.FEEDER_SHOOTING_SPEED)).whenReleased(()->shooter.stop());
 
-
+		
 		//-----Operator Controls-----\\
 		//oi.operator_aButton.toggleWhenPressed(climb, true);  // schedules ClimbUpAndDown for endgame
 		oi.operator_leftBumper.whenPressed(()->climber.secondHook.set(true));
@@ -133,7 +131,7 @@ public class RobotContainer {
 				// Pass config
 				config);*/
 	
-		RamseteCommand ramseteCommand =
+		/*RamseteCommand ramseteCommand =
 			new RamseteCommand(
 				Robot.autoTrajectory,
 				driveTrain::getPose,
@@ -148,12 +146,12 @@ public class RobotContainer {
 				rightPID,
 				// RamseteCommand passes volts to the callback
 				driveTrain::tankDriveVolts,
-				driveTrain);
+				driveTrain);*/
 	
 		// Reset odometry to the starting pose of the trajectory.
-		driveTrain.resetOdometry(Robot.autoTrajectory.getInitialPose());
-		return ramseteCommand.andThen(() -> driveTrain.tankDriveVolts(0, 0));
-		
+		//driveTrain.resetOdometry(Robot.autoTrajectories.get(DriverStation.getGameSpecificMessage()).getInitialPose());
+		//return Robot.autoPathCommands.get(DriverStation.getGameSpecificMessage()).andThen(() -> driveTrain.tankDriveVolts(0, 0));
+		return new LeftTwoBall();	
 
 		/*
 

@@ -1,0 +1,9 @@
+{
+  "lengthUnit": "Meter",
+  "exportUnit": "Always Meters",
+  "maxVelocity": 2.0,
+  "maxAcceleration": 2.0,
+  "trackWidth": 0.635,
+  "gameName": "Rapid React",
+  "outputDir": "../../frc-6574-2022/src/main/deploy"
+}

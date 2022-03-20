@@ -7,37 +7,48 @@ package frc.robot.commands.autocommands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class AutoIntakeStop extends CommandBase {
-  /** Creates a new AutoIntakeStop. */
-  public AutoIntakeStop() {
+public class TurnRelativeDegrees extends CommandBase {
+
+  double degrees = 0.0;
+  boolean clockwise = false;
+  double initialGyro = 0.0;
+
+  /** Creates a new TurnRelativeDegrees. */
+  public TurnRelativeDegrees(double degrees, boolean clockwise) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.intake, RobotContainer.shooter);
+    this.degrees = degrees;
+    this.clockwise = clockwise;
+    initialGyro = RobotContainer.driveTrain.getGyroAngle();
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //RobotContainer.intake.retractIntake();
-    RobotContainer.intake.stop();
-    RobotContainer.intake.stopOmnis();
-    RobotContainer.shooter.stopOuter();
+
+    if (clockwise) {
+      RobotContainer.driveTrain.arcadeDrive(0.0, -0.5);
+    } else {
+      RobotContainer.driveTrain.arcadeDrive(0.0, 0.5);
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-
+    RobotContainer.driveTrain.stop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    if (Math.abs(RobotContainer.driveTrain.getGyroAngle() - initialGyro) < 5) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

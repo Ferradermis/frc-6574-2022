@@ -25,12 +25,12 @@ public class IntakeProcess extends CommandBase {
   @Override
   public void execute() {
     if (RobotContainer.oi.driver_leftBumper.get()) {
-      RobotContainer.intake.spin(-Constants.INTAKE_SPIN_SPEED);
+      RobotContainer.intake.spin(-1);
     } else {
-     RobotContainer.intake.spin(Constants.INTAKE_SPIN_SPEED);
+     RobotContainer.intake.spin(Constants.INTAKE_SPIN_SPEED); //Constants.INTAKE_SPIN_SPEED
     }
-     RobotContainer.intake.spinOmnis(Constants.OMNIS_SPIN_SPEED);
-     RobotContainer.shooter.spinOuter(Constants.FEEDER_OUTER_SPEED);
+     RobotContainer.intake.spinOmnis(Constants.OMNIS_SPIN_SPEED); //Constants.OMNIS_SPIN_SPEED
+     RobotContainer.shooter.spinOuter(Constants.FEEDER_OUTER_SPEED); //Constants.FEEDER_OUTER_SPEED
      //if (no color sensor sensing) {
      //RobotContainer.shooter.spinInner(Constants.FEEDER_INNER_SPEED);
      //} else {

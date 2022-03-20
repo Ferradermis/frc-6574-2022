@@ -37,7 +37,8 @@ public class DriveTrain extends SubsystemBase {
 	final double MaxDriveSpeed = 0.3;//was .15
 	final double MaxTurnSpeed = 0.25;
 	public final int EncoderUnitsPerFeet = 14500;//New robot probably need to change.
-	public final double encoderDistancePerPulse = 0.000021382;
+	public final double encoderDistancePerPulse = 0.000021382 * (0.925);
+
 
 	private final DifferentialDriveOdometry m_odometry;
 

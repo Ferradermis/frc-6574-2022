@@ -4,9 +4,13 @@
 
 package frc.robot;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.HashMap;
 
+import edu.wpi.first.math.controller.RamseteController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -14,8 +18,7 @@ import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.autocommands.Auto;
-import frc.robot.subsystems.Blinkin;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
 
 /**
 * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -29,6 +32,9 @@ public class Robot extends TimedRobot {
 
 	private RobotContainer m_robotContainer;
 	public static Trajectory autoTrajectory = new Trajectory();
+	public static HashMap<String, Trajectory> autoTrajectories = new HashMap<String, Trajectory>();
+	public static HashMap<String, RamseteCommand> autoPathCommands = new HashMap<String, RamseteCommand>();
+
 	/**
 	* This function is run when the robot is first started up and should be used for any
 	* initialization code.
@@ -39,10 +45,36 @@ public class Robot extends TimedRobot {
 		// autonomous chooser on the dashboard.
 		m_robotContainer = new RobotContainer();
 		try {
-			Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve("paths/AutoPath.wpilib.json");
-			autoTrajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+			File[] fileList = Filesystem.getDeployDirectory().toPath().resolve("output/").toFile().listFiles();
+			for (File file : fileList) {
+				if (file.getName().endsWith(".json")) {
+					Trajectory trajectory = TrajectoryUtil.fromPathweaverJson(file.toPath());
+					RamseteCommand ramseteCommand =
+					new RamseteCommand(
+						trajectory,
+						RobotContainer.driveTrain::getPose,
+						new RamseteController(Constants.kRamseteB, Constants.kRamseteZeta),
+						new SimpleMotorFeedforward(
+							Constants.ksVolts,
+							Constants.kvVoltSecondsPerMeter,
+							Constants.kaVoltSecondsSquaredPerMeter),
+						Constants.kDriveKinematics,
+						RobotContainer.driveTrain::getWheelSpeeds,
+						RobotContainer.leftPID,
+						RobotContainer.rightPID,
+						// RamseteCommand passes volts to the callback
+						RobotContainer.driveTrain::tankDriveVolts,
+						RobotContainer.driveTrain);
+					autoTrajectories.put(file.getName(), trajectory);
+					autoPathCommands.put(file.getName(), ramseteCommand);
+					//DriverStation.reportWarning(file.getName(), true);
+					//System.out.println(file.getName());
+				}
+			}
+			//Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve("paths/AutoPath.wpilib.json");
+			//autoTrajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
 		  } catch (IOException ex) {
-			  DriverStation.reportError("Unable to open trajectory: " + "paths/AutoPath.wpilib.json", ex.getStackTrace());
+			  //DriverStation.reportError("Unable to open trajectory: " + "paths/AutoPath.wpilib.json", ex.getStackTrace());
 		  }
 		RobotContainer.ph.clearStickyFaults();
 		RobotContainer.pdh.clearStickyFaults();
