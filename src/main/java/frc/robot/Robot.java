@@ -149,8 +149,8 @@ public class Robot extends TimedRobot {
 		  else if (OI.driver_backButton.get()) { //enables shooter and compressor for standard teleop
 			//RobotContainer.compressor.setClosedLoopControl(true);
 			RobotContainer.compressor.enableDigital();
+		}
 	}
-}
 
 	@Override
 	public void testInit() {

@@ -11,14 +11,19 @@ public class TurnRelativeDegrees extends CommandBase {
 
   double degrees = 0.0;
   boolean clockwise = false;
-  double initialGyro = 0.0;
+  double targetGyro = 0.0;
 
   /** Creates a new TurnRelativeDegrees. */
   public TurnRelativeDegrees(double degrees, boolean clockwise) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.degrees = degrees;
     this.clockwise = clockwise;
-    initialGyro = RobotContainer.driveTrain.getGyroAngle();
+    if (clockwise) {
+      targetGyro = RobotContainer.driveTrain.getGyroAngle() + degrees;
+    } else {
+      targetGyro = RobotContainer.driveTrain.getGyroAngle() - degrees;
+    }
+  
   }
 
   // Called when the command is initially scheduled.
@@ -45,7 +50,7 @@ public class TurnRelativeDegrees extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (Math.abs(RobotContainer.driveTrain.getGyroAngle() - initialGyro) < 5) {
+    if (Math.abs(RobotContainer.driveTrain.getGyroAngle() - targetGyro) < 5) {
       return true;
     } else {
       return false;

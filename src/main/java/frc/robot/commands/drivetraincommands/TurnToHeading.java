@@ -39,11 +39,11 @@ public class TurnToHeading extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    angleError = intendedHeading - RobotContainer.driveTrain.getGyroAngle();   
     turnSpeed = angleError * kP + Math.copySign(kF, angleError);
     // make sure turnSpeed is not greater than MaxTurnSpeed
     turnSpeed = ((Math.abs(turnSpeed) > MaxTurnSpeed ? Math.copySign(MaxTurnSpeed, angleError): turnSpeed));
     RobotContainer.driveTrain.arcadeDrive(0, turnSpeed);
-    //angleError = intendedHeading - driveTrain.getGyroAngle();   
   }
 
   // Called once the command ends or is interrupted.

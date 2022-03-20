@@ -46,7 +46,6 @@ public class Shooter extends SubsystemBase {
 	@Override
 	public void periodic() {
 		// This method will be called once per scheduler run
-
 		SmartDashboard.putNumber("Shooter velocity", shooterRight.getSelectedSensorVelocity());
 		//spinShooterClosedLoop(13000, Constants.FEEDER_SHOOTING_SPEED);
 		//spinShooterPercentOutput(0.7, 0);
@@ -85,7 +84,7 @@ public class Shooter extends SubsystemBase {
 	}
 
 	public void stop() {
-		shooterRight.set(0);
+		shooterRight.set(0.25);
 		feederInner.set(ControlMode.PercentOutput, 0);
 		feederOuter.set(ControlMode.PercentOutput, 0);
 		RobotContainer.intake.spinOmnis(0);

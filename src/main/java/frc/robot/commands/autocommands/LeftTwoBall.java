@@ -5,12 +5,9 @@
 package frc.robot.commands.autocommands;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
-import frc.robot.Robot;
 import frc.robot.RobotContainer;
-import frc.robot.commands.intakecommands.IntakeProcess;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -29,9 +26,11 @@ public class LeftTwoBall extends SequentialCommandGroup {
       new AutoShoot(0, 0).withTimeout(0),
       new AutoIntake(),
       new AutoPathSegment("LeftTwoBallDefense.wpilib.json"),
-      new AutoDrive(0.5, 0).withTimeout(.75),
-      new AutoDrive(0, 0).withTimeout(0),
-      new AutoShoot(2000, Constants.FEEDER_SHOOTING_SPEED).withTimeout(2.5)
+      new TurnRelativeDegrees(90, true),
+      new AutoShoot(2000, Constants.FEEDER_SHOOTING_SPEED).withTimeout(2.5),
+      new InstantCommand(()->RobotContainer.shooter.stop()),
+      new AutoIntakeStop(),
+      new InstantCommand(()->RobotContainer.intake.retractIntake())
     );
   }
 }
