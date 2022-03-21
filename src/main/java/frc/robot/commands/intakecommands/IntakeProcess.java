@@ -8,11 +8,13 @@ package frc.robot.commands.intakecommands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.Intake;
 
 public class IntakeProcess extends CommandBase {
   /** Creates a new IntakeProcess. */
   public IntakeProcess() {
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(RobotContainer.intake);
   }
 
   // Called when the command is initially scheduled.

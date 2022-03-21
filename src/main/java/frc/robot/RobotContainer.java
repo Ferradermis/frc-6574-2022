@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.commands.autocommands.LeftTwoBall;
+import frc.robot.commands.climbercommands.SetClimberToStartPosition;
 import frc.robot.commands.drivetraincommands.ArcadeDrive;
 import frc.robot.commands.intakecommands.IntakeProcess;
 import frc.robot.subsystems.Climber;
@@ -82,7 +83,7 @@ public class RobotContainer {
 
 		//-----Driver Controls-----\\
 		oi.driver_rightBumper.toggleWhenPressed(new IntakeProcess());
-		oi.driver_rightTrigger.whenPressed(()->shooter.spinShooterClosedLoop(11500, Constants.FEEDER_SHOOTING_SPEED)).whenReleased(()->shooter.stop());
+		oi.driver_rightTrigger.whenPressed(()->shooter.spinShooterClosedLoop(Constants.SHOOTER_VELOCITY_HIGH, Constants.FEEDER_SHOOTING_SPEED)).whenReleased(()->shooter.stop());
 		//oi.driver_leftTrigger.whenPressed(()->shooter.spinShooterPercentOutput(Constants.SHOOTER_HIGH_GOAL_PERCENT_OUTPUT, Constants.FEEDER_SHOOTING_SPEED)).whenReleased(()->shooter.stop());
 
 		
@@ -90,6 +91,11 @@ public class RobotContainer {
 		//oi.operator_aButton.toggleWhenPressed(climb, true);  // schedules ClimbUpAndDown for endgame
 		oi.operator_leftBumper.whenPressed(()->climber.secondHook.set(true));
 		oi.operator_rightBumper.whenPressed(()->climber.initialHook.set(true));
+		oi.operator_xButton.whenPressed(()->climber.elevator.set(true));
+		oi.operator_bButton.whenPressed(()->climber.elevator.set(false));
+		//oi.operator_yButton.whenPressed(()->climber.incrementClimber());
+
+		//oi.operator_xButton.whenPressed(new SetClimberToStartPosition(Constants.CLIMBER_START_POSITION));
 	}
 
 

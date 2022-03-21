@@ -73,6 +73,7 @@ public final class Constants {
     /** Climber */
     public static final int CLIMBER_INITIAL_HOOK_PCH_ID = 6;
     public static final int CLIMBER_SECOND_HOOK_PCH_ID = 7;
+    public static final int CLIMBER_ELEVATOR_PCH_ID = 14;
 
     /** Intake */
     public static final int INTAKE_PCH_ID = 15;

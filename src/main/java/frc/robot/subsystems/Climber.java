@@ -20,28 +20,30 @@ import frc.robot.RobotContainer;
 //Double hook, firstHook, secondHook
 public class Climber extends SubsystemBase {
 	
-	//WPI_TalonFX climberRight = new WPI_TalonFX(Constants.CLIMBER_RIGHT_CAN_ID);
-	//WPI_TalonFX climberLeft = new WPI_TalonFX(Constants.CLIMBER_LEFT_CAN_ID);
+	public WPI_TalonFX climberRight = new WPI_TalonFX(Constants.CLIMBER_RIGHT_CAN_ID);
+	WPI_TalonFX climberLeft = new WPI_TalonFX(Constants.CLIMBER_LEFT_CAN_ID);
 
-	double currentLimit = 60; //amps
-	double currentLimitThreshold = 80; //amps
+	double currentLimit = 40; //amps
+	double currentLimitThreshold = 60; //amps
 	double currentLimitThresholdTime = .5; //seconds
 
 	public Solenoid initialHook = new Solenoid(Constants.PCH_CAN_ID, PneumaticsModuleType.REVPH, Constants.CLIMBER_INITIAL_HOOK_PCH_ID);
 	public Solenoid secondHook = new Solenoid(Constants.PCH_CAN_ID, PneumaticsModuleType.REVPH, Constants.CLIMBER_SECOND_HOOK_PCH_ID);
+	public Solenoid elevator = new Solenoid(Constants.PCH_CAN_ID, PneumaticsModuleType.REVPH, Constants.CLIMBER_ELEVATOR_PCH_ID);
+
 
 	/** Creates a new Climber. */
 	public Climber() {
-		/*climberRight.configFactoryDefault();
+		climberRight.configFactoryDefault();
 		climberLeft.configFactoryDefault();
 		climberLeft.follow(climberRight);
 		climberLeft.setInverted(true);
 		climberRight.setNeutralMode(NeutralMode.Brake);
-		climberLeft.setNeutralMode(NeutralMode.Brake);*/
+		climberLeft.setNeutralMode(NeutralMode.Brake);
 
 		/**CTRE documentation says SupplyCurrentLimit is for avoiding the tripping of breakers*/
-		/*climberLeft.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, currentLimit, currentLimitThreshold, currentLimitThresholdTime));
-		climberRight.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, currentLimit, currentLimitThreshold, currentLimitThresholdTime));*/
+		climberLeft.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, currentLimit, currentLimitThreshold, currentLimitThresholdTime));
+		climberRight.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, currentLimit, currentLimitThreshold, currentLimitThresholdTime));
 
 		/**CTRE documentation says StatorCurrentLimit is for limiting acceleration/torque or heat generation*/
 		//climberLeft.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, currentLimit, currentLimitThreshold, currentLimitThresholdTime));
@@ -64,16 +66,50 @@ public class Climber extends SubsystemBase {
 	}
 
 	public void spin(double speed) {
-		//climberRight.set(-speed); 
+		climberRight.set(-speed); 
 	}
 
 	public void hold() {
-		//double climberPosition = climberRight.getSelectedSensorPosition();
-		//climberRight.set(ControlMode.Position, climberPosition);
+		double climberPosition = climberRight.getSelectedSensorPosition();
+		climberRight.set(ControlMode.Position, climberPosition);
+	}
+
+	public void setToVerticalStart(double verticalClimbPosition) {
+		double climbPosition;
+		climbPosition = verticalClimbPosition;
+		climberRight.set(ControlMode.Position, climbPosition);
+	}
+
+	public void incrementClimber() {
+		double currentPosition = climberRight.getSelectedSensorPosition();
+		climberRight.set(ControlMode.Position, currentPosition+100);
+	}
+
+	public void raiseClimberElevator() {
+		elevator.set(true);
+	}
+
+	public void lowerClimberElevator() {
+		elevator.set(false);
 	}
 
 	public void stop() {
-		//climberRight.set(0);
+		climberRight.set(0);
 	}
 
+	public boolean climberAtPosition(double targetClimberPosition) {
+		double tolerance = 300;
+		return (Math.abs(climberRight.getSelectedSensorPosition() - targetClimberPosition) < tolerance);
+	}
+
+	public void configPID() {
+		double kP = 0.1;
+		double kI = 0;
+		double kD = 0;
+		double kF = 0;
+		climberRight.config_kP(0, kP);
+		climberRight.config_kF(0, kF);
+		climberRight.config_kI(0, kI);
+		climberRight.config_kD(0, kD);
+	}
 }
