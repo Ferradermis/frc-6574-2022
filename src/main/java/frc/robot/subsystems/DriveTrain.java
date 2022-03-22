@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
@@ -18,10 +19,8 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.RobotContainer;
 
 public class DriveTrain extends SubsystemBase {
 
@@ -52,17 +51,17 @@ public class DriveTrain extends SubsystemBase {
 	@Override
 	public void periodic() {
 		// This method will be called once per scheduler run
-		SmartDashboard.putNumber("Actual Gyro Heading: ", gyro.getAngle());
-		SmartDashboard.putNumber("Acual Drive Position: ", getPosition());
+		//SmartDashboard.putNumber("Actual Gyro Heading: ", gyro.getAngle());
+		//SmartDashboard.putNumber("Acual Drive Position: ", getPosition());
 
-		SmartDashboard.putNumber("Left:", frontLeft.getSelectedSensorPosition() * encoderDistancePerPulse);
-		SmartDashboard.putNumber("Right:", frontRight.getSelectedSensorPosition() * encoderDistancePerPulse);
+		//SmartDashboard.putNumber("Left:", frontLeft.getSelectedSensorPosition() * encoderDistancePerPulse);
+		//SmartDashboard.putNumber("Right:", frontRight.getSelectedSensorPosition() * encoderDistancePerPulse);
 		
-		SmartDashboard.putNumber("Left speed:", frontLeft.getSelectedSensorVelocity() * encoderDistancePerPulse * 10);
-		SmartDashboard.putNumber("Right speed:", frontRight.getSelectedSensorVelocity() * encoderDistancePerPulse * 10);
+		//SmartDashboard.putNumber("Left speed:", frontLeft.getSelectedSensorVelocity() * encoderDistancePerPulse * 10);
+		//SmartDashboard.putNumber("Right speed:", frontRight.getSelectedSensorVelocity() * encoderDistancePerPulse * 10);
 		
-		SmartDashboard.putNumber("Left PID:", RobotContainer.leftPID.getSetpoint());
-		SmartDashboard.putNumber("Right PID:", RobotContainer.rightPID.getSetpoint());
+		//SmartDashboard.putNumber("Left PID:", RobotContainer.leftPID.getSetpoint());
+		//SmartDashboard.putNumber("Right PID:", RobotContainer.rightPID.getSetpoint());
 
 		m_odometry.update(gyro.getRotation2d().unaryMinus(), frontLeft.getSelectedSensorPosition() * encoderDistancePerPulse, frontRight.getSelectedSensorPosition() * encoderDistancePerPulse);
 	}
@@ -206,6 +205,34 @@ public class DriveTrain extends SubsystemBase {
 		middleRight.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, currentLimit, currentLimitThreshold, currentLimitThresholdTime));
 		backRight.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, currentLimit, currentLimitThreshold, currentLimitThresholdTime));
 
+		middleLeft.setStatusFramePeriod(StatusFrame.Status_1_General, 100);
+		middleLeft.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 1000);
+		middleLeft.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 1000);
+		middleLeft.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 1000);
+		middleLeft.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 1000);
+		middleLeft.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 1000);
+
+		middleRight.setStatusFramePeriod(StatusFrame.Status_1_General, 100);
+		middleRight.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 1000);
+		middleRight.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 1000);
+		middleRight.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 1000);
+		middleRight.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 1000);
+		middleRight.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 1000);
+
+		backRight.setStatusFramePeriod(StatusFrame.Status_1_General, 100);
+		backRight.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 1000);
+		backRight.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 1000);
+		backRight.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 1000);
+		backRight.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 1000);
+		backRight.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 1000);
+
+		
+		backLeft.setStatusFramePeriod(StatusFrame.Status_1_General, 100);
+		backLeft.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 1000);
+		backLeft.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 1000);
+		backLeft.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 1000);
+		backLeft.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 1000);
+		backLeft.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 1000);
 
 		//Use if we start to do drive by POSITION Closed Loop
 		//double kF = 0.00070;

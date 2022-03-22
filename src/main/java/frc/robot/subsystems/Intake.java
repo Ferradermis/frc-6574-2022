@@ -6,11 +6,13 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkMaxLowLevel.PeriodicFrame;
 
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -43,6 +45,25 @@ public class Intake extends SubsystemBase {
 
 		intakeLeft.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 30, 20, 1));
 		intakeRight.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 30, 20, 1));
+
+		intakeLeft.setStatusFramePeriod(StatusFrame.Status_1_General, 100);
+		intakeLeft.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 1000);
+		intakeLeft.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 1000);
+		intakeLeft.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 1000);
+
+		intakeRight.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 1000);
+		intakeRight.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 1000);
+		intakeRight.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 1000);
+
+		omniLeft.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 500);
+		omniLeft.setPeriodicFramePeriod(PeriodicFrame.kStatus3, 500);
+
+		omniRight.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 500);
+		omniRight.setPeriodicFramePeriod(PeriodicFrame.kStatus3, 500);
+
+
+
+
 
 	}
 

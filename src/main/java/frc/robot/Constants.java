@@ -26,10 +26,11 @@ public final class Constants {
     public static final double SHOOTER_HIGH_GOAL_PERCENT_OUTPUT = 0.55;
     public static final double AUTO_DRIVE_DISTANCE = 0.25;
     public static final double SHOOTER_RESTING_VELOCITY = .25; //10 is placeholder value
+    public static final double TOPROLLER_OPEN_LOOP = .875;
 
 
     /**Closed Loop Constants */
-    public static final double SHOOTER_VELOCITY_HIGH = 11500; //20 is placeholder value
+    public static final double SHOOTER_VELOCITY_HIGH = 4000; //20 is placeholder value
     public static final double INTAKE_VELOCITY = 30;
     public static final double CLIMBER_START_POSITION = 0;
     public static final double TOPROLLER_VELOCITY = 1000;
@@ -75,8 +76,8 @@ public final class Constants {
     */
 
     /** Climber */
-    public static final int CLIMBER_INITIAL_HOOK_PCH_ID = 6;
-    public static final int CLIMBER_SECOND_HOOK_PCH_ID = 7;
+    public static final int CLIMBER_INITIAL_HOOK_PCH_ID = 7;
+    public static final int CLIMBER_SECOND_HOOK_PCH_ID = 6;
     public static final int CLIMBER_ELEVATOR_PCH_ID = 14;
 
     /** Intake */

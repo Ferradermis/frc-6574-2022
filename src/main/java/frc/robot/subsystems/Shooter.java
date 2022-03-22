@@ -6,12 +6,14 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkMaxLowLevel.PeriodicFrame;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkMaxPIDController;
-import com.revrobotics.CANSparkMax.ControlType;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -25,7 +27,7 @@ public class Shooter extends SubsystemBase {
 	WPI_TalonFX shooterRight = new WPI_TalonFX(Constants.SHOOTER_RIGHT_CAN_ID);
 
 	CANSparkMax topRoller = new CANSparkMax(Constants.SHOOTER_TOPROLLER_CAN_ID, MotorType.kBrushless);
-	SparkMaxPIDController topRollerPIDController = topRoller.getPIDController();
+	//SparkMaxPIDController topRollerPIDController = topRoller.getPIDController();
 	RelativeEncoder topRollerEncoder = topRoller.getEncoder();
 
 
@@ -35,6 +37,8 @@ public class Shooter extends SubsystemBase {
 		feederOuter.configFactoryDefault();
 		shooterLeft.configFactoryDefault();
 		shooterRight.configFactoryDefault();
+
+		topRoller.restoreFactoryDefaults();
 
 
 		shooterLeft.follow(shooterRight);
@@ -48,6 +52,24 @@ public class Shooter extends SubsystemBase {
 
 		feederInner.setNeutralMode(NeutralMode.Brake);
 		feederOuter.setNeutralMode(NeutralMode.Brake);
+
+		shooterLeft.setStatusFramePeriod(StatusFrame.Status_1_General, 100);
+		shooterLeft.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 1000);
+		shooterLeft.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 1000);
+		shooterLeft.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 1000);
+
+		shooterRight.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 1000);
+		shooterRight.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 1000);
+		shooterRight.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 1000);
+		shooterRight.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 1000);
+		shooterRight.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 1000);
+
+
+		topRoller.setIdleMode(IdleMode.kCoast);
+		topRoller.setInverted(true);
+		topRoller.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 100);
+		topRoller.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 500);
+		topRoller.setPeriodicFramePeriod(PeriodicFrame.kStatus3, 500);
 
 		configShooterPID();
 		
@@ -88,7 +110,7 @@ public class Shooter extends SubsystemBase {
 	}
 
 	public void spinTopRollerClosedLoop (double velocity) {
-		topRollerPIDController.setReference(velocity, ControlType.kVelocity);
+		//topRollerPIDController.setReference(velocity, ControlType.kVelocity);
 	}
 
 	public void spinTopRollerOpenLoop(double speed) {
@@ -104,8 +126,7 @@ public class Shooter extends SubsystemBase {
 		feederInner.set(ControlMode.PercentOutput, feederPercent);
 		feederOuter.set(ControlMode.PercentOutput, feederPercent);
 		RobotContainer.intake.spinOmnis(Constants.INTAKE_SPIN_SPEED);
-		spinTopRollerClosedLoop(Constants.TOPROLLER_VELOCITY);
-
+		spinTopRollerOpenLoop(Constants.TOPROLLER_OPEN_LOOP);
 	}
 
 	public void spinShooterPercentOutput(double percent, double feederPercent) {
@@ -113,7 +134,6 @@ public class Shooter extends SubsystemBase {
 		feederInner.set(ControlMode.PercentOutput, feederPercent);
 		feederOuter.set(ControlMode.PercentOutput, feederPercent);
 		RobotContainer.intake.spinOmnis(Constants.INTAKE_SPIN_SPEED);
-
 	}
 
 	public void stop() {
@@ -122,9 +142,10 @@ public class Shooter extends SubsystemBase {
 		feederOuter.set(ControlMode.PercentOutput, 0);
 		RobotContainer.intake.spinOmnis(0);
 		stopTopRoller();
-
 	}
+
 	public void configShooterPID() {
+		//Main Wheels
 		double kP = 0.2;
 		double kI = 0;
 		double kD = 0;
@@ -134,16 +155,11 @@ public class Shooter extends SubsystemBase {
 		shooterRight.config_kI(0, kI);
 		shooterRight.config_kD(0, kD);
 
-
-
-
-
-
-
+		//Top Roller
 		double REVkP = .1;
 		double REVkF = .0;
-		topRollerPIDController.setP(REVkP);
-		topRollerPIDController.setFF(REVkF);
+		//topRollerPIDController.setP(REVkP);
+		//topRollerPIDController.setFF(REVkF);
 
 	}
 }

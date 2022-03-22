@@ -84,17 +84,18 @@ public class RobotContainer {
 		oi.driver_rightBumper.toggleWhenPressed(new IntakeProcess());
 		oi.driver_rightTrigger.whenPressed(()->shooter.spinShooterClosedLoop(Constants.SHOOTER_VELOCITY_HIGH, Constants.FEEDER_SHOOTING_SPEED)).whenReleased(()->shooter.stop());
 		oi.driver_leftTrigger.whenPressed(()->shooter.spinShooterPercentOutput(Constants.SHOOTER_LOW_GOAL_PERCENT_OUTPUT, Constants.FEEDER_SHOOTING_SPEED)).whenReleased(()->shooter.stop());
-		oi.driver_aButton.whenPressed(()->shooter.spinTopRollerClosedLoop(1000)).whenReleased(()->shooter.stopTopRoller());
+		oi.driver_aButton.whenPressed(()->shooter.spinTopRollerOpenLoop(.25)).whenReleased(()->shooter.stopTopRoller());
 
 		
 		//-----Operator Controls-----\\
 		//oi.operator_aButton.toggleWhenPressed(climb, true);  // schedules ClimbUpAndDown for endgame
 		oi.operator_leftBumper.whenPressed(()->climber.secondHook.set(true));
 		oi.operator_rightBumper.whenPressed(()->climber.initialHook.set(true));
+		oi.operator_aButton.whenPressed(()->climber.initialHook.set(false));
 		oi.operator_xButton.whenPressed(()->climber.elevator.set(true));
 		oi.operator_bButton.whenPressed(()->climber.elevator.set(false));
 		
-		//oi.operator_yButton.whenPressed(()->climber.incrementClimber());
+		oi.operator_yButton.whenPressed(()->climber.incrementClimber()).whenReleased(()->climber.stop());
 		//oi.operator_xButton.whenPressed(new SetClimberToStartPosition(Constants.CLIMBER_START_POSITION));
 	}
 
