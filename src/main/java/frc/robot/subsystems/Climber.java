@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
@@ -36,6 +37,7 @@ public class Climber extends SubsystemBase {
 	public Climber() {
 		climberRight.configFactoryDefault();
 		climberLeft.configFactoryDefault();
+
 		climberLeft.follow(climberRight);
 		climberLeft.setInverted(true);
 		climberRight.setNeutralMode(NeutralMode.Brake);
@@ -44,21 +46,24 @@ public class Climber extends SubsystemBase {
 		/**CTRE documentation says SupplyCurrentLimit is for avoiding the tripping of breakers*/
 		climberLeft.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, currentLimit, currentLimitThreshold, currentLimitThresholdTime));
 		climberRight.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, currentLimit, currentLimitThreshold, currentLimitThresholdTime));
-
 		/**CTRE documentation says StatorCurrentLimit is for limiting acceleration/torque or heat generation*/
 		//climberLeft.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, currentLimit, currentLimitThreshold, currentLimitThresholdTime));
 		//climberRight.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, currentLimit, currentLimitThreshold, currentLimitThresholdTime));
 
+		resetClimberEncoder();
+		configPID();
 	}
 
 	@Override
 	public void periodic() {
 		// This method will be called once per scheduler run
-		double speed = RobotContainer.oi.getOperatorLeftY();
-		
-		if (Math.abs(speed)< .3) {
-			hold();
+		SmartDashboard.putNumber("Climber Position", climberRight.getSelectedSensorPosition());
+		//SmartDashboard.putBoolean("Climber at requested position?", climberAtPosition(Constants.CLIMBER_START_POSITION));
+		SmartDashboard.putNumber("Climber Current", climberRight.getSupplyCurrent());
 
+		double speed = RobotContainer.oi.getOperatorLeftY();
+		if (Math.abs(speed)< .25) {
+			hold();
 		}
 		else {
 			spin(.65);
@@ -82,7 +87,7 @@ public class Climber extends SubsystemBase {
 
 	public void incrementClimber() {
 		double currentPosition = climberRight.getSelectedSensorPosition();
-		climberRight.set(ControlMode.Position, currentPosition+100);
+		climberRight.set(ControlMode.Position, currentPosition+1000);
 	}
 
 	public void raiseClimberElevator() {
@@ -100,6 +105,10 @@ public class Climber extends SubsystemBase {
 	public boolean climberAtPosition(double targetClimberPosition) {
 		double tolerance = 300;
 		return (Math.abs(climberRight.getSelectedSensorPosition() - targetClimberPosition) < tolerance);
+	}
+
+	public void resetClimberEncoder() {
+		climberRight.setSelectedSensorPosition(0);
 	}
 
 	public void configPID() {

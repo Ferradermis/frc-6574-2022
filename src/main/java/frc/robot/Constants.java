@@ -25,11 +25,14 @@ public final class Constants {
     public static final double SHOOTER_LOW_GOAL_PERCENT_OUTPUT = 0.35;
     public static final double SHOOTER_HIGH_GOAL_PERCENT_OUTPUT = 0.55;
     public static final double AUTO_DRIVE_DISTANCE = 0.25;
+    public static final double SHOOTER_RESTING_VELOCITY = .25; //10 is placeholder value
+
 
     /**Closed Loop Constants */
-    public static final double SHOOTER_RESTING_VELOCITY = 10; //10 is placeholder value
-    public static final double SHOOTER_VELOCITY_ONE = 20; //20 is placeholder value
+    public static final double SHOOTER_VELOCITY_HIGH = 11500; //20 is placeholder value
     public static final double INTAKE_VELOCITY = 30;
+    public static final double CLIMBER_START_POSITION = 0;
+    public static final double TOPROLLER_VELOCITY = 1000;
 
     /*
         CAN IDs
@@ -62,6 +65,7 @@ public final class Constants {
     /** Shooter */
     public static final int SHOOTER_LEFT_CAN_ID = 15;
     public static final int SHOOTER_RIGHT_CAN_ID = 13;
+    public static final int SHOOTER_TOPROLLER_CAN_ID = 19;
 
     public static final int FEEDER_INNER_CAN_ID = 14;
     public static final int FEEDER_OUTER_CAN_ID = 18;
