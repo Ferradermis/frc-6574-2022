@@ -11,7 +11,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
@@ -24,8 +23,8 @@ public class Climber extends SubsystemBase {
 	public WPI_TalonFX climberRight = new WPI_TalonFX(Constants.CLIMBER_RIGHT_CAN_ID);
 	public WPI_TalonFX climberLeft = new WPI_TalonFX(Constants.CLIMBER_LEFT_CAN_ID);
 
-	double currentLimit = 100; //amps
-	double currentLimitThreshold = 100; //amps
+	double currentLimit = 65; //amps
+	double currentLimitThreshold = 65; //amps
 	double currentLimitThresholdTime = .5; //seconds
 
 	public Solenoid initialHook = new Solenoid(Constants.PCH_CAN_ID, PneumaticsModuleType.REVPH, Constants.CLIMBER_INITIAL_HOOK_PCH_ID);
@@ -44,8 +43,8 @@ public class Climber extends SubsystemBase {
 		climberLeft.setNeutralMode(NeutralMode.Brake);
 
 		/**CTRE documentation says SupplyCurrentLimit is for avoiding the tripping of breakers*/
-		//climberLeft.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, currentLimit, currentLimitThreshold, currentLimitThresholdTime));
-		//climberRight.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, currentLimit, currentLimitThreshold, currentLimitThresholdTime));
+		climberLeft.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, currentLimit, currentLimitThreshold, currentLimitThresholdTime));
+		climberRight.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, currentLimit, currentLimitThreshold, currentLimitThresholdTime));
 		/**CTRE documentation says StatorCurrentLimit is for limiting acceleration/torque or heat generation*/
 		//climberLeft.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, currentLimit, currentLimitThreshold, currentLimitThresholdTime));
 		//climberRight.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, currentLimit, currentLimitThreshold, currentLimitThresholdTime));
@@ -57,9 +56,9 @@ public class Climber extends SubsystemBase {
 	@Override
 	public void periodic() {
 		// This method will be called once per scheduler run
-		SmartDashboard.putNumber("Climber Position", climberRight.getSelectedSensorPosition());
+		//SmartDashboard.putNumber("Climber Position", climberRight.getSelectedSensorPosition());
 		//SmartDashboard.putBoolean("Climber at requested position?", climberAtPosition(Constants.CLIMBER_START_POSITION));
-		SmartDashboard.putNumber("Climber Current", climberRight.getSupplyCurrent());
+		//SmartDashboard.putNumber("Climber Current", climberRight.getSupplyCurrent());
 
 		
 		spin(.85 * RobotContainer.oi.getOperatorLeftY());
@@ -98,6 +97,13 @@ public class Climber extends SubsystemBase {
 		elevator.set(false);
 	}
 
+	public void raiseInitialHook() {
+		initialHook.set(true);
+	}
+
+	public void lowerInitialHook(){ 
+		initialHook.set(false);
+	}
 	public void stop() {
 		climberRight.set(0);
 	}

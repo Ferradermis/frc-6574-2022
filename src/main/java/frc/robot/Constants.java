@@ -19,18 +19,18 @@ public final class Constants {
     /**Open Loop Constants */
     public static final double INTAKE_SPIN_SPEED = .75;  
     public static final double OMNIS_SPIN_SPEED = 0.75;
-    public static final double FEEDER_INNER_SPEED = 0.7;
-    public static final double FEEDER_OUTER_SPEED = 0.5;
+    public static final double FEEDER_INNER_SPEED = 0.8;
+    public static final double FEEDER_OUTER_SPEED = 0.7;
     public static final double FEEDER_SHOOTING_SPEED = 0.75;
     public static final double SHOOTER_LOW_GOAL_PERCENT_OUTPUT = 0.35;
     public static final double SHOOTER_HIGH_GOAL_PERCENT_OUTPUT = 0.55;
     public static final double AUTO_DRIVE_DISTANCE = 0.25;
     public static final double SHOOTER_RESTING_VELOCITY = .25; //10 is placeholder value
-    public static final double TOPROLLER_OPEN_LOOP = .875;
-
+    public static final double TOPROLLER_OPEN_LOOP = .6;
+    public static final double TOPROLLER_OPEN_LOOP_LOWER_GOAL = .2;
 
     /**Closed Loop Constants */
-    public static final double SHOOTER_VELOCITY_HIGH = 4000; //20 is placeholder value
+    public static final double SHOOTER_VELOCITY_HIGH = 4350; //20 is placeholder value
     public static final double INTAKE_VELOCITY = 30;
     public static final double CLIMBER_START_POSITION = 0;
     public static final double TOPROLLER_VELOCITY = 1000;

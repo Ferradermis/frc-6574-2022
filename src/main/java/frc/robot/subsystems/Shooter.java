@@ -21,10 +21,10 @@ import frc.robot.RobotContainer;
 
 public class Shooter extends SubsystemBase {
 
-	WPI_TalonFX feederInner = new WPI_TalonFX(Constants.FEEDER_INNER_CAN_ID);
-	WPI_TalonFX feederOuter = new WPI_TalonFX(Constants.FEEDER_OUTER_CAN_ID);
-	WPI_TalonFX shooterLeft = new WPI_TalonFX(Constants.SHOOTER_LEFT_CAN_ID);
-	WPI_TalonFX shooterRight = new WPI_TalonFX(Constants.SHOOTER_RIGHT_CAN_ID);
+	public WPI_TalonFX feederInner = new WPI_TalonFX(Constants.FEEDER_INNER_CAN_ID);
+	public WPI_TalonFX feederOuter = new WPI_TalonFX(Constants.FEEDER_OUTER_CAN_ID);
+	public WPI_TalonFX shooterLeft = new WPI_TalonFX(Constants.SHOOTER_LEFT_CAN_ID);
+	public WPI_TalonFX shooterRight = new WPI_TalonFX(Constants.SHOOTER_RIGHT_CAN_ID);
 
 	CANSparkMax topRoller = new CANSparkMax(Constants.SHOOTER_TOPROLLER_CAN_ID, MotorType.kBrushless);
 	//SparkMaxPIDController topRollerPIDController = topRoller.getPIDController();
@@ -53,23 +53,23 @@ public class Shooter extends SubsystemBase {
 		feederInner.setNeutralMode(NeutralMode.Brake);
 		feederOuter.setNeutralMode(NeutralMode.Brake);
 
-		shooterLeft.setStatusFramePeriod(StatusFrame.Status_1_General, 100);
-		shooterLeft.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 1000);
-		shooterLeft.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 1000);
-		shooterLeft.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 1000);
+		shooterLeft.setStatusFramePeriod(StatusFrame.Status_1_General, 1000);
+		shooterLeft.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 10000);
+		shooterLeft.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 10000);
+		shooterLeft.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 10000);
 
-		shooterRight.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 1000);
-		shooterRight.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 1000);
-		shooterRight.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 1000);
-		shooterRight.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 1000);
-		shooterRight.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 1000);
+		shooterRight.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 10000);
+		shooterRight.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 10000);
+		shooterRight.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 10000);
+		shooterRight.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 10000);
+		shooterRight.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 10000);
 
 
 		topRoller.setIdleMode(IdleMode.kCoast);
 		topRoller.setInverted(true);
 		topRoller.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 100);
-		topRoller.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 500);
-		topRoller.setPeriodicFramePeriod(PeriodicFrame.kStatus3, 500);
+		topRoller.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 5000);
+		topRoller.setPeriodicFramePeriod(PeriodicFrame.kStatus3, 5000);
 
 		configShooterPID();
 		
@@ -78,8 +78,8 @@ public class Shooter extends SubsystemBase {
 	@Override
 	public void periodic() {
 		// This method will be called once per scheduler run
-		SmartDashboard.putNumber("Shooter velocity", shooterRight.getSelectedSensorVelocity());
-		SmartDashboard.putNumber("Top roller velocity", topRollerEncoder.getVelocity());
+		//SmartDashboard.putNumber("Shooter velocity", shooterRight.getSelectedSensorVelocity());
+		//SmartDashboard.putNumber("Top roller velocity", topRollerEncoder.getVelocity());
 
 		//spinShooterClosedLoop(13000, Constants.FEEDER_SHOOTING_SPEED);
 		//spinShooterPercentOutput(0.7, 0);
@@ -129,6 +129,14 @@ public class Shooter extends SubsystemBase {
 		spinTopRollerOpenLoop(Constants.TOPROLLER_OPEN_LOOP);
 	}
 
+	public void spinShooterClosedLoopLower(double velocity, double feederPercent) {
+		shooterRight.set(.35);
+		feederInner.set(ControlMode.PercentOutput, feederPercent);
+		feederOuter.set(ControlMode.PercentOutput, feederPercent);
+		RobotContainer.intake.spinOmnis(Constants.INTAKE_SPIN_SPEED);
+		spinTopRollerOpenLoop(Constants.TOPROLLER_OPEN_LOOP_LOWER_GOAL);
+	}
+
 	public void spinShooterPercentOutput(double percent, double feederPercent) {
 		shooterRight.set(ControlMode.PercentOutput, percent);
 		feederInner.set(ControlMode.PercentOutput, feederPercent);
@@ -137,7 +145,7 @@ public class Shooter extends SubsystemBase {
 	}
 
 	public void stop() {
-		shooterRight.set(Constants.SHOOTER_RESTING_VELOCITY);
+		shooterRight.set(0); //Constants.SHOOTER_RESTING_VELOCITY
 		feederInner.set(ControlMode.PercentOutput, 0);
 		feederOuter.set(ControlMode.PercentOutput, 0);
 		RobotContainer.intake.spinOmnis(0);

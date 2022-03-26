@@ -6,6 +6,7 @@ package frc.robot.commands.autocommands;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
@@ -19,18 +20,19 @@ public class LeftTwoBall extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new AutoIntake(),
-      new AutoPathSegment("LeftTwoBallForward.wpilib.json"),
+      new WaitCommand(.75),
+      new AutoPathSegment("LeftTwoForward.wpilib.json"),
       new AutoIntakeStop(),
-      new AutoPathSegment("LeftTwoBallBackward.wpilib.json"),
-      new AutoShoot(6000, Constants.FEEDER_SHOOTING_SPEED).withTimeout(2.5),
+      new AutoPathSegment("LeftTwoBackward.wpilib.json"),
+      new AutoShoot(Constants.SHOOTER_VELOCITY_HIGH, Constants.FEEDER_SHOOTING_SPEED).withTimeout(2),
       new AutoShoot(0, 0).withTimeout(0),
       new AutoIntake(),
-      new AutoPathSegment("LeftTwoBallDefense.wpilib.json"),
+      new AutoPathSegment("LeftTwoDefense.wpilib.json"),
       new TurnRelativeDegrees(90, true),
       new AutoShoot(2000, Constants.FEEDER_SHOOTING_SPEED).withTimeout(2.5),
       new InstantCommand(()->RobotContainer.shooter.stop()),
       new AutoIntakeStop(),
-      new InstantCommand(()->RobotContainer.intake.retractIntake())
+      new InstantCommand(()->RobotContainer.intake.retractIntake()) 
     );
   }
 }

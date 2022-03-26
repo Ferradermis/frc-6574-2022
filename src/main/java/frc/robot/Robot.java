@@ -25,7 +25,7 @@ import edu.wpi.first.wpilibj2.command.RamseteCommand;
 * each mode, as described in the TimedRobot documentation. If you change the name of this class or
 * the package after creating this project, you must also update the build.gradle file in the
 * project.
-*/
+*/ 
 public class Robot extends TimedRobot {
 
 	private Command m_autonomousCommand;
@@ -135,7 +135,6 @@ public class Robot extends TimedRobot {
 		}
 		RobotContainer.ph.clearStickyFaults();
 		RobotContainer.pdh.clearStickyFaults();
-
 		RobotContainer.driveTrain.resetPosition();
 	}
 
@@ -144,7 +143,7 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		if (OI.driver_startButton.get()) { //disables shooter and compressor for endgame
 			//RobotContainer.compressor.setClosedLoopControl(false);
-			RobotContainer.compressor.disable();
+			//RobotContainer.compressor.disable();
 			RobotContainer.shooter.stopShooterWheels();
 		  }
 		  else if (OI.driver_backButton.get()) { //enables shooter and compressor for standard teleop
@@ -168,6 +167,20 @@ public class Robot extends TimedRobot {
 	public void testPeriodic() {
 		//Blinkin.oceanPalette();
 		RobotContainer.compressor.enableDigital();
+	}
+
+	@Override
+	public void testExit() {
+		RobotContainer.climber.climberLeft.follow(RobotContainer.climber.climberRight);
+		
+		RobotContainer.driveTrain.middleRight.follow(RobotContainer.driveTrain.frontRight);
+		RobotContainer.driveTrain.middleLeft.follow(RobotContainer.driveTrain.frontRight);
+		RobotContainer.driveTrain.backRight.follow(RobotContainer.driveTrain.frontRight);
+		RobotContainer.driveTrain.backLeft.follow(RobotContainer.driveTrain.frontRight);
+		
+		RobotContainer.intake.intakeLeft.follow(RobotContainer.intake.intakeRight);
+
+		RobotContainer.shooter.shooterLeft.follow(RobotContainer.shooter.shooterRight);
 	}
 
 }

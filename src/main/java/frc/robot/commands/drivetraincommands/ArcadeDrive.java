@@ -38,7 +38,7 @@ public class ArcadeDrive extends CommandBase {
 		double x = -RobotContainer.oi.getDriverRightX();
 
 		drive_cmd = Math.pow(y, 3) * 1;
-		steer_cmd = Math.pow(x, 3) * .4;
+		steer_cmd = Math.pow(x, 3) * .3;
 
 		// throttle is constant that controls "speed" of robot; helpful in testing in small areas
 		RobotContainer.driveTrain.arcadeDrive(drive_cmd, steer_cmd);

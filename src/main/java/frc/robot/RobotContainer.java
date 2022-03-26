@@ -17,6 +17,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.commands.autocommands.LeftTwoBall;
+import frc.robot.commands.climbercommands.ToggleElevator;
+import frc.robot.commands.climbercommands.ToggleInitialHook;
 import frc.robot.commands.drivetraincommands.ArcadeDrive;
 import frc.robot.commands.intakecommands.IntakeProcess;
 import frc.robot.subsystems.Climber;
@@ -67,7 +69,7 @@ public class RobotContainer {
 
 		driveTrain.setDefaultCommand(arcadeDrive);
 
-		SmartDashboard.putNumber("Delay Start of Auto: ", 0.0);
+		//SmartDashboard.putNumber("Delay Start of Auto: ", 0.0);
 		//autochooser.addOption("Auto", new DriveAlongAngle(-1,0));
 		SmartDashboard.putData("Autonomous Chooser", autochooser);
 		//allianceChooser.setDefaultOption("Red Alliance (pipeline)", "red");
@@ -83,8 +85,9 @@ public class RobotContainer {
 		//-----Driver Controls-----\\
 		oi.driver_rightBumper.toggleWhenPressed(new IntakeProcess());
 		oi.driver_rightTrigger.whenPressed(()->shooter.spinShooterClosedLoop(Constants.SHOOTER_VELOCITY_HIGH, Constants.FEEDER_SHOOTING_SPEED)).whenReleased(()->shooter.stop());
-		oi.driver_leftTrigger.whenPressed(()->shooter.spinShooterPercentOutput(Constants.SHOOTER_LOW_GOAL_PERCENT_OUTPUT, Constants.FEEDER_SHOOTING_SPEED)).whenReleased(()->shooter.stop());
-		oi.driver_aButton.whenPressed(()->shooter.spinTopRollerOpenLoop(.25)).whenReleased(()->shooter.stopTopRoller());
+		oi.driver_leftTrigger.whenPressed(()->shooter.spinShooterClosedLoopLower(Constants.SHOOTER_LOW_GOAL_PERCENT_OUTPUT, Constants.FEEDER_SHOOTING_SPEED)).whenReleased(()->shooter.stop());
+		oi.driver_aButton.toggleWhenPressed(new ToggleElevator());
+		oi.driver_xButton.toggleWhenPressed(new ToggleInitialHook());
 
 		
 		//-----Operator Controls-----\\

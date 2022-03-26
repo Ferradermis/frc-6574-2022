@@ -21,10 +21,10 @@ import frc.robot.Constants;
 
 public class Intake extends SubsystemBase {
 
-	WPI_TalonFX intakeLeft = new WPI_TalonFX(Constants.INTAKE_LEFT_CAN_ID);
-	WPI_TalonFX intakeRight = new WPI_TalonFX(Constants.INTAKE_RIGHT_CAN_ID);
-	CANSparkMax omniLeft = new CANSparkMax(Constants.INTAKE_LEFT_OMNI_CAN_ID, MotorType.kBrushless);
-	CANSparkMax omniRight = new CANSparkMax(Constants.INTAKE_RIGHT_OMNI_CAN_ID, MotorType.kBrushless);
+	public WPI_TalonFX intakeLeft = new WPI_TalonFX(Constants.INTAKE_LEFT_CAN_ID);
+	public WPI_TalonFX intakeRight = new WPI_TalonFX(Constants.INTAKE_RIGHT_CAN_ID);
+	public CANSparkMax omniLeft = new CANSparkMax(Constants.INTAKE_LEFT_OMNI_CAN_ID, MotorType.kBrushless);
+	public CANSparkMax omniRight = new CANSparkMax(Constants.INTAKE_RIGHT_OMNI_CAN_ID, MotorType.kBrushless);
 	public Solenoid deployer = new Solenoid(Constants.PCH_CAN_ID, PneumaticsModuleType.REVPH, Constants.INTAKE_PCH_ID);
 
 	/** Creates a new Intake. */
@@ -47,19 +47,19 @@ public class Intake extends SubsystemBase {
 		intakeRight.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 30, 20, 1));
 
 		intakeLeft.setStatusFramePeriod(StatusFrame.Status_1_General, 100);
-		intakeLeft.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 1000);
-		intakeLeft.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 1000);
-		intakeLeft.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 1000);
+		intakeLeft.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 10000);
+		intakeLeft.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 10000);
+		intakeLeft.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 10000);
 
-		intakeRight.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 1000);
-		intakeRight.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 1000);
-		intakeRight.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 1000);
+		intakeRight.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 10000);
+		intakeRight.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 10000);
+		intakeRight.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 10000);
 
-		omniLeft.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 500);
-		omniLeft.setPeriodicFramePeriod(PeriodicFrame.kStatus3, 500);
+		omniLeft.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 5000);
+		omniLeft.setPeriodicFramePeriod(PeriodicFrame.kStatus3, 5000);
 
-		omniRight.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 500);
-		omniRight.setPeriodicFramePeriod(PeriodicFrame.kStatus3, 500);
+		omniRight.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 5000);
+		omniRight.setPeriodicFramePeriod(PeriodicFrame.kStatus3, 5000);
 
 
 
