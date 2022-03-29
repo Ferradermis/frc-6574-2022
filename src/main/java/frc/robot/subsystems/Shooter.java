@@ -13,8 +13,8 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.CANSparkMaxLowLevel.PeriodicFrame;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxPIDController;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
@@ -27,52 +27,14 @@ public class Shooter extends SubsystemBase {
 	public WPI_TalonFX shooterRight = new WPI_TalonFX(Constants.SHOOTER_RIGHT_CAN_ID);
 
 	CANSparkMax topRoller = new CANSparkMax(Constants.SHOOTER_TOPROLLER_CAN_ID, MotorType.kBrushless);
-	//SparkMaxPIDController topRollerPIDController = topRoller.getPIDController();
+	SparkMaxPIDController topRollerPIDController = topRoller.getPIDController();
 	RelativeEncoder topRollerEncoder = topRoller.getEncoder();
 
 
 	/** Creates a new Shooter. */
 	public Shooter() {
-		feederInner.configFactoryDefault();
-		feederOuter.configFactoryDefault();
-		shooterLeft.configFactoryDefault();
-		shooterRight.configFactoryDefault();
-
-		topRoller.restoreFactoryDefaults();
-
-
-		shooterLeft.follow(shooterRight);
-		shooterLeft.setInverted(true);
-
-		feederInner.setInverted(false);
-		feederOuter.setInverted(false);
-
-		shooterLeft.setNeutralMode(NeutralMode.Coast);
-		shooterRight.setNeutralMode(NeutralMode.Coast);
-
-		feederInner.setNeutralMode(NeutralMode.Brake);
-		feederOuter.setNeutralMode(NeutralMode.Brake);
-
-		shooterLeft.setStatusFramePeriod(StatusFrame.Status_1_General, 1000);
-		shooterLeft.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 10000);
-		shooterLeft.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 10000);
-		shooterLeft.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 10000);
-
-		shooterRight.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 10000);
-		shooterRight.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 10000);
-		shooterRight.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 10000);
-		shooterRight.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 10000);
-		shooterRight.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 10000);
-
-
-		topRoller.setIdleMode(IdleMode.kCoast);
-		topRoller.setInverted(true);
-		topRoller.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 100);
-		topRoller.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 5000);
-		topRoller.setPeriodicFramePeriod(PeriodicFrame.kStatus3, 5000);
-
+		configMotors();
 		configShooterPID();
-		
 	}
 
 	@Override
@@ -97,12 +59,12 @@ public class Shooter extends SubsystemBase {
 		feederInner.set(speed);
 	}
 
-	public void spinOuter(double speed) {
-		feederOuter.set(speed);
-	}
-
 	public void stopInner() {
 		feederInner.set(0);
+	}
+
+	public void spinOuter(double speed) {
+		feederOuter.set(speed);
 	}
 
 	public void stopOuter() {
@@ -166,8 +128,50 @@ public class Shooter extends SubsystemBase {
 		//Top Roller
 		double REVkP = .1;
 		double REVkF = .0;
-		//topRollerPIDController.setP(REVkP);
-		//topRollerPIDController.setFF(REVkF);
+		topRollerPIDController.setP(REVkP);
+		topRollerPIDController.setFF(REVkF);
+	}
+
+	public void configMotors() {
+		topRoller.restoreFactoryDefaults();
+		topRoller.setIdleMode(IdleMode.kCoast);
+		topRoller.setInverted(true);
+		topRoller.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 100);
+		topRoller.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 5000);
+		topRoller.setPeriodicFramePeriod(PeriodicFrame.kStatus3, 5000);
+
+		feederInner.configFactoryDefault();
+		feederOuter.configFactoryDefault();
+		shooterLeft.configFactoryDefault();
+		shooterRight.configFactoryDefault();
+
+		shooterLeft.follow(shooterRight);
+		shooterLeft.setInverted(true);
+
+		feederInner.setInverted(false);
+		feederOuter.setInverted(false);
+
+		shooterLeft.setNeutralMode(NeutralMode.Coast);
+		shooterRight.setNeutralMode(NeutralMode.Coast);
+
+		feederInner.setNeutralMode(NeutralMode.Brake);
+		feederOuter.setNeutralMode(NeutralMode.Brake);
+
+		shooterLeft.setStatusFramePeriod(StatusFrame.Status_1_General, 100);
+		shooterLeft.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 10000);
+		shooterLeft.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 10000);
+		shooterLeft.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 10000);
+		shooterLeft.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 10000);
+		shooterLeft.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 10000);
+		shooterLeft.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 10000);
+
+		shooterRight.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 10000);
+		shooterRight.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 10000);
+		shooterRight.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 10000);
+		shooterRight.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 10000);
+		shooterRight.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 10000);
+		shooterRight.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 10000);
+
 
 	}
 }

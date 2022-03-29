@@ -42,7 +42,7 @@ public class DriveTrain extends SubsystemBase {
 	private final DifferentialDriveOdometry m_odometry;
 
 	public DriveTrain() {
-		configureMotors();
+		configMotors();
 		resetPosition();
 		gyro.calibrate();//
 		m_odometry = new DifferentialDriveOdometry(gyro.getRotation2d().unaryMinus());
@@ -157,12 +157,12 @@ public class DriveTrain extends SubsystemBase {
 		frontRight.set(ControlMode.Position, frontRightPosition);
 	}
 
-	private void configureMotors() {
+	private void configMotors() {
 
 		double rampRate = 0.1; //time in seconds to go from 0 to full throttle; Lower this number and tune current limits
-		int currentLimit = 30;
+		int currentLimit = 45;
 		//currentLimitThreshold represents the current that the motor needs to sustain for the currentLimitThresholdTime to then be limited to the currentLimit
-		int currentLimitThreshold = 35;
+		int currentLimitThreshold = 60;
 		double currentLimitThresholdTime = 1.0;
 
 		gyro.enableLogging(false);
@@ -206,46 +206,36 @@ public class DriveTrain extends SubsystemBase {
 		backRight.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, currentLimit, currentLimitThreshold, currentLimitThresholdTime));
 
 		middleLeft.setStatusFramePeriod(StatusFrame.Status_1_General, 100);
-		middleLeft.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 1000);
-		middleLeft.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 1000);
-		middleLeft.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 1000);
-		middleLeft.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 1000);
-		middleLeft.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 1000);
+		middleLeft.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 10000);
+		middleLeft.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 10000);
+		middleLeft.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 10000);
+		middleLeft.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 10000);
+		middleLeft.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 10000);
+		middleLeft.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 10000);
 
 		middleRight.setStatusFramePeriod(StatusFrame.Status_1_General, 100);
-		middleRight.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 1000);
-		middleRight.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 1000);
-		middleRight.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 1000);
-		middleRight.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 1000);
-		middleRight.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 1000);
+		middleRight.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 10000);
+		middleRight.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 10000);
+		middleRight.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 10000);
+		middleRight.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 10000);
+		middleRight.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 10000);
+		middleRight.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 10000);
 
 		backRight.setStatusFramePeriod(StatusFrame.Status_1_General, 100);
-		backRight.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 1000);
-		backRight.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 1000);
-		backRight.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 1000);
-		backRight.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 1000);
-		backRight.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 1000);
-
-		
+		backRight.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 10000);
+		backRight.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 10000);
+		backRight.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 10000);
+		backRight.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 10000);
+		backRight.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 10000);
+		backRight.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 10000);
+	
 		backLeft.setStatusFramePeriod(StatusFrame.Status_1_General, 100);
-		backLeft.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 1000);
-		backLeft.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 1000);
-		backLeft.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 1000);
-		backLeft.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 1000);
-		backLeft.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 1000);
-
-		//Use if we start to do drive by POSITION Closed Loop
-		//double kF = 0.00070;
-		//double kP = 0.0032;
-		//double kI = 0;
-		//double kD = 0;
-		//frontLeft.config_kP(0, kP);
-		//frontRight.config_kP(0, kP);
-		//frontLeft.config_kF(0, kF);
-		//frontRight.config_kF(0, kF);
-
-		//  frontLeft.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
-		//  frontRight.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
+		backLeft.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 10000);
+		backLeft.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 10000);
+		backLeft.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 10000);
+		backLeft.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 10000);
+		backLeft.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 10000);
+		backLeft.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 10000);
 	}
 
 }
