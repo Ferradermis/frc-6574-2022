@@ -19,8 +19,8 @@ public final class Constants {
     /**Open Loop Constants */
     public static final double INTAKE_SPIN_SPEED = .75;  
     public static final double OMNIS_SPIN_SPEED = 0.75;
-    public static final double FEEDER_INNER_SPEED = 0.8;
-    public static final double FEEDER_OUTER_SPEED = 0.7;
+    public static final double FEEDER_INNER_SPEED = 1;
+    public static final double FEEDER_OUTER_SPEED = 1;
     public static final double FEEDER_SHOOTING_SPEED = 0.75;
     public static final double SHOOTER_LOW_GOAL_PERCENT_OUTPUT = 0.35;
     public static final double SHOOTER_HIGH_GOAL_PERCENT_OUTPUT = 0.55;
@@ -84,11 +84,11 @@ public final class Constants {
     public static final int INTAKE_PCH_ID = 15;
 
     /* trajectory **/
-    public static final double ksVolts = 0.69156;
-    public static final double kvVoltSecondsPerMeter = 2.5347;
-    public static final double kaVoltSecondsSquaredPerMeter = 0.30969;
+    public static final double ksVolts = 0.6393;
+    public static final double kvVoltSecondsPerMeter = 2.5467;
+    public static final double kaVoltSecondsSquaredPerMeter = 0.24935;
 
-    public static final double kPDriveVel = 1.5;//3.4345;//kPDriveVel = 3.193;//3.561;
+    public static final double kPDriveVel = 1.5;//3.1867;//1.5;//3.4345;//kPDriveVel = 3.193;//3.561;
 
     public static final double kTrackWidthMeters = 0.635;
     public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackWidthMeters);
