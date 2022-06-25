@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.commands.autocommands.FiveBall;
 import frc.robot.commands.autocommands.LeftTwoBall;
 import frc.robot.commands.autocommands.blinkincommands.Green;
 import frc.robot.commands.climbercommands.CloseInitialHook;
@@ -168,6 +169,8 @@ public class RobotContainer {
 		//driveTrain.resetOdometry(Robot.autoTrajectories.get(DriverStation.getGameSpecificMessage()).getInitialPose());
 		//return Robot.autoPathCommands.get(DriverStation.getGameSpecificMessage()).andThen(() -> driveTrain.tankDriveVolts(0, 0));
 		return new LeftTwoBall();	
+
+		//return new FiveBall();
 
 		/*
 

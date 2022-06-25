@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
@@ -34,21 +35,7 @@ public class Climber extends SubsystemBase {
 
 	/** Creates a new Climber. */
 	public Climber() {
-		climberRight.configFactoryDefault();
-		climberLeft.configFactoryDefault();
-
-		climberLeft.follow(climberRight);
-		climberLeft.setInverted(true);
-		climberRight.setNeutralMode(NeutralMode.Brake);
-		climberLeft.setNeutralMode(NeutralMode.Brake);
-
-		/**CTRE documentation says SupplyCurrentLimit is for avoiding the tripping of breakers*/
-		climberLeft.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, currentLimit, currentLimitThreshold, currentLimitThresholdTime));
-		climberRight.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, currentLimit, currentLimitThreshold, currentLimitThresholdTime));
-		/**CTRE documentation says StatorCurrentLimit is for limiting acceleration/torque or heat generation*/
-		//climberLeft.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, currentLimit, currentLimitThreshold, currentLimitThresholdTime));
-		//climberRight.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, currentLimit, currentLimitThreshold, currentLimitThresholdTime));
-
+		
 		resetClimberEncoder();
 		configPID();
 	}
@@ -135,5 +122,38 @@ public class Climber extends SubsystemBase {
 		climberRight.config_kF(0, kF);
 		climberRight.config_kI(0, kI);
 		climberRight.config_kD(0, kD);
+	}
+
+	public void configMotors() {
+		climberRight.configFactoryDefault();
+		climberLeft.configFactoryDefault();
+
+		climberLeft.follow(climberRight);
+		climberLeft.setInverted(true);
+		climberRight.setNeutralMode(NeutralMode.Brake);
+		climberLeft.setNeutralMode(NeutralMode.Brake);
+
+		/**CTRE documentation says SupplyCurrentLimit is for avoiding the tripping of breakers*/
+		climberLeft.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, currentLimit, currentLimitThreshold, currentLimitThresholdTime));
+		climberRight.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, currentLimit, currentLimitThreshold, currentLimitThresholdTime));
+		/**CTRE documentation says StatorCurrentLimit is for limiting acceleration/torque or heat generation*/
+		//climberLeft.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, currentLimit, currentLimitThreshold, currentLimitThresholdTime));
+		//climberRight.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, currentLimit, currentLimitThreshold, currentLimitThresholdTime));
+
+
+		climberLeft.setStatusFramePeriod(StatusFrame.Status_1_General, 100);
+		climberLeft.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 10000);
+		climberLeft.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 10000);
+		climberLeft.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 10000);
+		climberLeft.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 10000);
+		climberLeft.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 10000);
+		climberLeft.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 10000);
+
+		climberRight.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 10000);
+		climberRight.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 10000);
+		climberRight.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 10000);
+		climberRight.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 10000);
+		climberRight.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 10000);
+		climberRight.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 10000);
 	}
 }

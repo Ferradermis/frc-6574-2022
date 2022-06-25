@@ -6,14 +6,13 @@ package frc.robot;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.HashMap;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryUtil;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -45,6 +44,9 @@ public class Robot extends TimedRobot {
 		// Instantiate our RobotContainer.  This will perform all our button bindings, and put our
 		// autonomous chooser on the dashboard.
 		m_robotContainer = new RobotContainer();
+		
+		CameraServer.startAutomaticCapture();
+
 		try {
 			File[] fileList = Filesystem.getDeployDirectory().toPath().resolve("output/").toFile().listFiles();
 			for (File file : fileList) {
@@ -165,7 +167,6 @@ public class Robot extends TimedRobot {
 		  }
 		  else if (OI.driver_backButton.get()) { //enables shooter and compressor for standard teleop
 			//RobotContainer.compressor.setClosedLoopControl(true);
-			RobotContainer.compressor.enableDigital();
 			RobotContainer.shooter.restingShooterSpeed();
 		}
 		Blinkin.rainbowPalette();

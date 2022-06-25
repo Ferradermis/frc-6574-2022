@@ -29,41 +29,7 @@ public class Intake extends SubsystemBase {
 
 	/** Creates a new Intake. */
 	public Intake() {
-		intakeLeft.configFactoryDefault();
-		intakeRight.configFactoryDefault();
-		omniLeft.restoreFactoryDefaults();
-		omniRight.restoreFactoryDefaults();
-
-		intakeLeft.follow(intakeRight);
-		intakeLeft.setInverted(true);
-
-		intakeLeft.setNeutralMode(NeutralMode.Coast);
-		intakeRight.setNeutralMode(NeutralMode.Coast);
-
-		omniLeft.setIdleMode(IdleMode.kCoast);
-		omniRight.setIdleMode(IdleMode.kCoast);
-
-		intakeLeft.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 30, 20, 1));
-		intakeRight.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 30, 20, 1));
-
-		intakeLeft.setStatusFramePeriod(StatusFrame.Status_1_General, 100);
-		intakeLeft.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 10000);
-		intakeLeft.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 10000);
-		intakeLeft.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 10000);
-
-		intakeRight.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 10000);
-		intakeRight.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 10000);
-		intakeRight.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 10000);
-
-		omniLeft.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 5000);
-		omniLeft.setPeriodicFramePeriod(PeriodicFrame.kStatus3, 5000);
-
-		omniRight.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 5000);
-		omniRight.setPeriodicFramePeriod(PeriodicFrame.kStatus3, 5000);
-
-
-
-
+		configMotors();
 
 	}
 
@@ -118,6 +84,47 @@ public class Intake extends SubsystemBase {
 		intakeRight.config_kF(0, kF);
 		intakeRight.config_kP(0, kP);
 
+	}
+
+	public void configMotors() {
+		intakeLeft.configFactoryDefault();
+		intakeRight.configFactoryDefault();
+		intakeLeft.follow(intakeRight);
+		intakeLeft.setInverted(true);
+		intakeLeft.setNeutralMode(NeutralMode.Coast);
+		intakeRight.setNeutralMode(NeutralMode.Coast);
+
+		intakeLeft.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 30, 20, 1));
+		intakeRight.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 30, 20, 1));
+
+		intakeLeft.setStatusFramePeriod(StatusFrame.Status_1_General, 100);
+		intakeLeft.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 10000);
+		intakeLeft.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 10000);
+		intakeLeft.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 10000);
+		intakeLeft.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 10000);
+		intakeLeft.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 10000);
+		intakeLeft.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 10000);
+
+
+		intakeRight.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 10000);
+		intakeRight.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 10000);
+		intakeRight.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 10000);
+		intakeRight.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 10000);
+		intakeRight.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 10000);
+		intakeRight.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 10000);
+		intakeRight.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 10000);
+
+
+		omniLeft.setIdleMode(IdleMode.kCoast);
+		omniRight.setIdleMode(IdleMode.kCoast);
+		omniLeft.restoreFactoryDefaults();
+		omniRight.restoreFactoryDefaults();
+
+		omniLeft.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 5000);
+		omniLeft.setPeriodicFramePeriod(PeriodicFrame.kStatus3, 5000);
+
+		omniRight.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 5000);
+		omniRight.setPeriodicFramePeriod(PeriodicFrame.kStatus3, 5000);
 	}
 
 }
