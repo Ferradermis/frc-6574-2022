@@ -6,25 +6,22 @@ package frc.robot.commands.climbercommands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.Blinkin;
 
-public class RaiseClimberElevator extends CommandBase {
-  /** Creates a new RaiseClimberElevator. */
-  public RaiseClimberElevator() {
+public class RaiseComberElevator extends CommandBase {
+  /** Creates a new RaiseComberElevator. */
+  public RaiseComberElevator() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.climber);
+    addRequirements(RobotContainer.shooter);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    RobotContainer.climber.raiseClimberElevator();
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Blinkin.skyBlue();
+    RobotContainer.climber.raiseClimberElevator();
   }
 
   // Called once the command ends or is interrupted.
@@ -34,6 +31,6 @@ public class RaiseClimberElevator extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }

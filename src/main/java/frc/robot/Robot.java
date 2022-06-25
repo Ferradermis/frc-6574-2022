@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import frc.robot.subsystems.Blinkin;
 
 /**
 * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -94,17 +95,18 @@ public class Robot extends TimedRobot {
 		// and running subsystem periodic() methods.  This must be called from the robot's periodic
 		// block in order for anything in the Command-based framework to work.
 		CommandScheduler.getInstance().run();
+		
 	}
 
 	/** This function is called once each time the robot enters Disabled mode. */
 	@Override
 	public void disabledInit() {
-
+		
 	}
 
 	@Override
 	public void disabledPeriodic() {
-
+		Blinkin.rainbowPalette();
 	}
 
 	/** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
@@ -121,6 +123,21 @@ public class Robot extends TimedRobot {
 	/** This function is called periodically during autonomous. */
 	@Override
 	public void autonomousPeriodic() {
+		// if red aliance LavaPallete
+		// if blue alliance oceanPallete
+
+		
+		if (RobotContainer.getAlliance().equals("led RED")){
+			Blinkin.lavaPalette();
+		}
+		else if (RobotContainer.getAlliance().equals("led BLUE")){
+			Blinkin.oceanPalette();
+		}
+		else{
+			Blinkin.white();
+		}
+
+		//Blinkin.forestPalette();
 
 	}
 
@@ -151,6 +168,8 @@ public class Robot extends TimedRobot {
 			RobotContainer.compressor.enableDigital();
 			RobotContainer.shooter.restingShooterSpeed();
 		}
+		Blinkin.rainbowPalette();
+		//Blinkin.testColor();
 	}
 
 	@Override
@@ -167,6 +186,7 @@ public class Robot extends TimedRobot {
 	public void testPeriodic() {
 		//Blinkin.oceanPalette();
 		RobotContainer.compressor.enableDigital();
+		Blinkin.wavePartyPalette();
 	}
 
 	@Override

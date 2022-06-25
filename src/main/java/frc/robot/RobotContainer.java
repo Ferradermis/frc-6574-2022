@@ -17,18 +17,25 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.commands.autocommands.LeftTwoBall;
+import frc.robot.commands.autocommands.blinkincommands.Green;
+import frc.robot.commands.climbercommands.CloseInitialHook;
+import frc.robot.commands.climbercommands.DetachInitialHook;
+import frc.robot.commands.climbercommands.DetachSecondHook;
+import frc.robot.commands.climbercommands.LowerClimberElevator;
+import frc.robot.commands.climbercommands.RaiseClimberElevator;
 import frc.robot.commands.climbercommands.ToggleElevator;
 import frc.robot.commands.climbercommands.ToggleInitialHook;
 import frc.robot.commands.drivetraincommands.ArcadeDrive;
 import frc.robot.commands.intakecommands.IntakeProcess;
+import frc.robot.commands.shootercommands.HighShooter;
+import frc.robot.commands.shootercommands.LowShooter;
 import frc.robot.subsystems.Climber;
 /*import frc.robot.commands.autonomouscommands.AutonomousMovingPractice;
 import frc.robot.commands.drivetraincommands.ArcadeDrive;
 import frc.robot.commands.shootercommands.ShootCommand;
 import frc.robot.commands.shootercommands.ShootCommandNoLime;
-import frc.robot.commands.shootercommands.StopShooting;
+import frc.robot.commands.shootercommands.StopShooting;*/
 import frc.robot.subsystems.Blinkin;
-import frc.robot.subsystems.Climber;*/
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
@@ -55,7 +62,7 @@ public class RobotContainer {
 	public static final PneumaticHub ph = new PneumaticHub(Constants.PCH_CAN_ID);
 	public static final PowerDistribution pdh = new PowerDistribution(Constants.PDH_CAN_ID, PowerDistribution.ModuleType.kRev);
 
-	//public static final Blinkin m_blinkin = new Blinkin(0);
+	public static final Blinkin m_blinkin = new Blinkin(0);
 
 	//Commands
 	public final ArcadeDrive arcadeDrive = new ArcadeDrive();
@@ -83,20 +90,19 @@ public class RobotContainer {
 
 
 		//-----Driver Controls-----\\
-		oi.driver_rightBumper.toggleWhenPressed(new IntakeProcess());
-		oi.driver_rightTrigger.whenPressed(()->shooter.spinShooterClosedLoop(Constants.SHOOTER_VELOCITY_HIGH, Constants.FEEDER_SHOOTING_SPEED)).whenReleased(()->shooter.stop());
-		oi.driver_leftTrigger.whenPressed(()->shooter.spinShooterClosedLoopLower(Constants.SHOOTER_LOW_GOAL_PERCENT_OUTPUT, Constants.FEEDER_SHOOTING_SPEED)).whenReleased(()->shooter.stop());
+		oi.driver_rightBumper.toggleWhenPressed(new IntakeProcess() );// lime
+		oi.driver_rightTrigger.whileHeld(new HighShooter());// Hot pink
+		oi.driver_leftTrigger.whileHeld(new LowShooter());// blue violet
 		oi.driver_aButton.toggleWhenPressed(new ToggleElevator());
 		oi.driver_xButton.toggleWhenPressed(new ToggleInitialHook());
 
-		
 		//-----Operator Controls-----\\
 		//oi.operator_aButton.toggleWhenPressed(climb, true);  // schedules ClimbUpAndDown for endgame
-		oi.operator_leftBumper.whenPressed(()->climber.secondHook.set(true));
-		oi.operator_rightBumper.whenPressed(()->climber.initialHook.set(true));
-		oi.operator_aButton.whenPressed(()->climber.initialHook.set(false));
-		oi.operator_xButton.whenPressed(()->climber.elevator.set(true));
-		oi.operator_bButton.whenPressed(()->climber.elevator.set(false));
+		oi.operator_leftBumper.whenPressed(new DetachSecondHook());//yellow
+		oi.operator_rightBumper.whenPressed(new CloseInitialHook());//red orange
+		oi.operator_aButton.whenPressed(new DetachInitialHook());//lawn green
+		oi.operator_xButton.whenPressed(new RaiseClimberElevator());//sky blue
+		oi.operator_bButton.whenPressed(new LowerClimberElevator());//dark red
 		
 		oi.operator_yButton.whenPressed(()->climber.incrementClimber()).whenReleased(()->climber.stop());
 		//oi.operator_xButton.whenPressed(new SetClimberToStartPosition(Constants.CLIMBER_START_POSITION));
@@ -180,8 +186,6 @@ public class RobotContainer {
 			new WaitCommand(1),
 			new AutoShoot(0,0).withTimeout(.25),
 			new AutoStopOmnis()
-
-			//insert blinkin command here
 		);
 
 		SequentialCommandGroup simpleAutoRoutine = new SequentialCommandGroup(
@@ -198,7 +202,7 @@ public class RobotContainer {
 		
 	}
 
-	public String getAlliance() {
+	public static String getAlliance() {
 		return allianceChooser.getSelected();
 	}
 

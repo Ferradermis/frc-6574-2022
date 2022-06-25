@@ -8,6 +8,7 @@ package frc.robot.commands.intakecommands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.Blinkin;
 
 public class IntakeProcess extends CommandBase {
   /** Creates a new IntakeProcess. */
@@ -25,6 +26,7 @@ public class IntakeProcess extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    Blinkin.lime();
     if (RobotContainer.oi.driver_leftBumper.get()) {
       RobotContainer.intake.spin(-1);
     } else {

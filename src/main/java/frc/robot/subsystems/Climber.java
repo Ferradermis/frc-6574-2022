@@ -104,6 +104,15 @@ public class Climber extends SubsystemBase {
 	public void lowerInitialHook(){ 
 		initialHook.set(false);
 	}
+
+	public void detachSecondHook() {
+		secondHook.set(true);
+	}
+
+	public void lowerSecondHook(){ 
+		secondHook.set(false);
+	}
+
 	public void stop() {
 		climberRight.set(0);
 	}
