@@ -52,6 +52,7 @@ public class Intake extends SubsystemBase {
 
 	public void spin(double speed) {
 		intakeRight.set(-speed);
+		intakeLeft.set(-speed);
 	}
 
 	public void spinClosedVelocity(double speed) {

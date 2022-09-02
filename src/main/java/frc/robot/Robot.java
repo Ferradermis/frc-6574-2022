@@ -45,7 +45,7 @@ public class Robot extends TimedRobot {
 		// autonomous chooser on the dashboard.
 		m_robotContainer = new RobotContainer();
 		
-		CameraServer.startAutomaticCapture();
+		//CameraServer.startAutomaticCapture();
 
 		try {
 			File[] fileList = Filesystem.getDeployDirectory().toPath().resolve("output/").toFile().listFiles();
@@ -200,7 +200,6 @@ public class Robot extends TimedRobot {
 		RobotContainer.driveTrain.backLeft.follow(RobotContainer.driveTrain.frontRight);
 		
 		RobotContainer.intake.intakeLeft.follow(RobotContainer.intake.intakeRight);
-
 		RobotContainer.shooter.shooterLeft.follow(RobotContainer.shooter.shooterRight);
 	}
 

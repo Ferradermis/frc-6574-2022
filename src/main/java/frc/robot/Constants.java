@@ -17,13 +17,13 @@ import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 public final class Constants {
 
     /**Open Loop Constants */
-    public static final double INTAKE_SPIN_SPEED = .15;  
+    public static final double INTAKE_SPIN_SPEED = 1;  
     public static final double OMNIS_SPIN_SPEED = 0.75;
     public static final double FEEDER_INNER_SPEED = 0.8;
     public static final double FEEDER_OUTER_SPEED = 0.7;
     public static final double FEEDER_SHOOTING_SPEED = 0.75;
     public static final double SHOOTER_LOW_GOAL_PERCENT_OUTPUT = 0.05;//0.35
-    public static final double SHOOTER_HIGH_GOAL_PERCENT_OUTPUT = 0.0;//0.55
+    public static final double SHOOTER_HIGH_GOAL_PERCENT_OUTPUT = 1.0;//0.55
     public static final double AUTO_DRIVE_DISTANCE = 0.25;
     public static final double SHOOTER_RESTING_VELOCITY = .25; //10 is placeholder value
     public static final double TOPROLLER_OPEN_LOOP = .6;

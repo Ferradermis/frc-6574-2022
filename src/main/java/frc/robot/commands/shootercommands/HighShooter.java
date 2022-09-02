@@ -31,6 +31,10 @@ public class HighShooter extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     RobotContainer.shooter.stop();
+    RobotContainer.intake.stopOmnis();
+    RobotContainer.shooter.stopInner();
+    RobotContainer.shooter.stopOuter();
+    RobotContainer.intake.stop();
   }
 
   // Returns true when the command should end.

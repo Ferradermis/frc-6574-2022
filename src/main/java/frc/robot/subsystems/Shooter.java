@@ -85,6 +85,7 @@ public class Shooter extends SubsystemBase {
 
 	public void spinShooterClosedLoop(double velocity, double feederPercent) {
 		shooterRight.set(ControlMode.Velocity, velocity);
+		shooterLeft.set(ControlMode.Velocity, velocity);
 		feederInner.set(ControlMode.PercentOutput, feederPercent);
 		feederOuter.set(ControlMode.PercentOutput, feederPercent);
 		RobotContainer.intake.spinOmnis(Constants.INTAKE_SPIN_SPEED);
@@ -101,6 +102,7 @@ public class Shooter extends SubsystemBase {
 
 	public void spinShooterPercentOutput(double percent, double feederPercent) {
 		shooterRight.set(ControlMode.PercentOutput, percent);
+		shooterLeft.set(ControlMode.PercentOutput, percent);
 		feederInner.set(ControlMode.PercentOutput, feederPercent);
 		feederOuter.set(ControlMode.PercentOutput, feederPercent);
 		RobotContainer.intake.spinOmnis(Constants.INTAKE_SPIN_SPEED);
@@ -108,6 +110,7 @@ public class Shooter extends SubsystemBase {
 
 	public void stop() {
 		shooterRight.set(0); //Constants.SHOOTER_RESTING_VELOCITY
+		shooterLeft.set(0);
 		feederInner.set(ControlMode.PercentOutput, 0);
 		feederOuter.set(ControlMode.PercentOutput, 0);
 		RobotContainer.intake.spinOmnis(0);
@@ -124,6 +127,11 @@ public class Shooter extends SubsystemBase {
 		shooterRight.config_kF(0, kF);
 		shooterRight.config_kI(0, kI);
 		shooterRight.config_kD(0, kD);
+
+		shooterLeft.config_kP(0, kP);
+		shooterLeft.config_kF(0, kF);
+		shooterLeft.config_kI(0, kI);
+		shooterLeft.config_kD(0, kD);
 
 		//Top Roller
 		double REVkP = .1;

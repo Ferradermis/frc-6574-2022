@@ -34,6 +34,9 @@ public class LowShooter extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     RobotContainer.shooter.stop();
+    RobotContainer.intake.stopOmnis();
+    RobotContainer.shooter.stopInner();
+    RobotContainer.shooter.stopOuter();
   }
 
   // Returns true when the command should end.

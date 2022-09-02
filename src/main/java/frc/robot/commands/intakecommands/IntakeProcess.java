@@ -26,7 +26,6 @@ public class IntakeProcess extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Blinkin.lime();
     if (RobotContainer.oi.driver_leftBumper.get()) {
       RobotContainer.intake.spin(-1);
     } else {
@@ -34,11 +33,7 @@ public class IntakeProcess extends CommandBase {
     }
      RobotContainer.intake.spinOmnis(Constants.OMNIS_SPIN_SPEED); //Constants.OMNIS_SPIN_SPEED
      RobotContainer.shooter.spinOuter(Constants.FEEDER_OUTER_SPEED); //Constants.FEEDER_OUTER_SPEED
-     //if (no color sensor sensing) {
-     //RobotContainer.shooter.spinInner(Constants.FEEDER_INNER_SPEED);
-     //} else {
-      //RobotContainer.shooter.stopInner();
-     //}
+     Blinkin.lime();
     
   }
 
